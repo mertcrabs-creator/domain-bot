@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum DomainStatus {
+  DISCOVERED
+  REVIEWING
+  AVAILABLE
+  ASSIGNED
+  PURCHASED
+  ARCHIVED
+}
+
+model User {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  passwordHash String
+  role        String   @default("SUPER_ADMIN")
+  fullAccess  Boolean  @default(true)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SourceSite {
+  id          String          @id @default(cuid())
+  name        String
+  url         String          @unique
+  isActive    Boolean         @default(true)
+  lastScanned DateTime?
+  createdAt   DateTime        @default(now())
+  domains     DroppedDomain[]
+}
+
+model DroppedDomain {
+  id             String           @id @default(cuid())
+  name           String           @unique
+  sourceSiteId   String
+  sourceSite     SourceSite       @relation(fields: [sourceSiteId], references: [id], onDelete: Cascade)
+  status         DomainStatus     @default(DISCOVERED)
+  domainAgeYears Int?
+  domainAuthority Int?
+  backlinkCount  Int?
+  estimatedValue Int?
+  expiresAt      DateTime?
+  discoveredAt   DateTime         @default(now())
+  assignment     DomainAssignment?
+}
+
+model Client {
+  id          String            @id @default(cuid())
+  name        String
+  email       String?
+  company     String?
+  createdAt   DateTime          @default(now())
+  assignments DomainAssignment[]
+}
+
+model DomainAssignment {
+  id           String         @id @default(cuid())
+  domainId     String         @unique
+  clientId     String
+  purchasedAt  DateTime       @default(now())
+  purchaseCost Int?
+  notes        String?
+  domain       DroppedDomain  @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  client       Client         @relation(fields: [clientId], references: [id], onDelete: Cascade)
+}
