@@ -28,6 +28,26 @@ export type User = Prisma.UserModel
  */
 export type SourceSite = Prisma.SourceSiteModel
 /**
+ * Model SourcePage
+ * 
+ */
+export type SourcePage = Prisma.SourcePageModel
+/**
+ * Model ScanJob
+ * 
+ */
+export type ScanJob = Prisma.ScanJobModel
+/**
+ * Model LinkedDomain
+ * 
+ */
+export type LinkedDomain = Prisma.LinkedDomainModel
+/**
+ * Model DomainMention
+ * 
+ */
+export type DomainMention = Prisma.DomainMentionModel
+/**
  * Model DroppedDomain
  * 
  */

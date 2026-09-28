@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# domain.bot
 
-## Getting Started
+Haber sitelerinin arşivlerini tarar, makalelerdeki dış linklerden **.com** domainleri toplar ve Verisign RDAP üzerinden kaydı düşmüş / düşmek üzere olanları bulur.
 
-First, run the development server:
+## Kurulum
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```powershell
+npm install
+npx playwright install chromium   # engelleyen siteler için headless tarayıcı
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`.env`:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+DATABASE_URL="postgresql://..."
+SCANNER_MAX_PAGES=2000     # bir tarama çalıştırmasında işlenecek max sayfa (0 = limitsiz)
+SCANNER_CONCURRENCY=4      # opsiyonel, aynı anda çekilen sayfa sayısı
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```powershell
+npx prisma migrate deploy
+npm run db:generate
+npm run db:seed-admins
+```
 
-## Learn More
+## Çalıştırma
 
-To learn more about Next.js, take a look at the following resources:
+İki ayrı terminal gerekir:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```powershell
+npm run dev      # web arayüzü → http://localhost:3000
+npm run worker   # tarama ve domain kontrol işçisi
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Taramalar web isteği içinde değil, worker'da çalışır. Worker kapanırsa yarım kalan tarama bir sonraki açılışta kaldığı yerden devam eder. Aynı anda tek bir worker çalıştırın.
 
-## Deploy on Vercel
+## Nasıl çalışır
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Keşif** — *Tüm arşiv* modunda `robots.txt` / `sitemap.xml` üzerinden bütün makale URL'leri `SourcePage` tablosuna yazılır (tag/kategori/yazar sayfaları elenir). *Site içi* modda verilen URL'den başlayıp site içinde 3 tık derinliğe kadar gezilir.
+2. **Tarama** — Sayfalar en eskiden başlayarak çekilir (ölü linkler eski haberlerde yoğunlaşır). Engellenen isteklerde Playwright'a düşülür. Sadece makale gövdesindeki linkler alınır; menü, footer, ilgili haberler vb. dışarıda kalır.
+3. **Domain** — Linkler kayıt edilebilir domaine indirgenir (`blog.ornek.com` → `ornek.com`), sadece `.com` tutulur, büyük platformlar elenir. Her link, kaynak makale, anchor text ve `rel` ile `DomainMention` olarak saklanır.
+4. **Kontrol** — Worker her domaini RDAP'ta sorgular:
+   - `AVAILABLE` — kayıt yok, hemen alınabilir
+   - `PENDING_DELETE` — ~5 gün içinde düşecek
+   - `REDEMPTION` — silinmiş, sahibi geri alabilir
+   - `EXPIRING` — süresi dolmuş/dolmak üzere ya da askıda (hold)
+   - `REGISTERED` — kayıtlı
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Adaylar düzenli olarak yeniden kontrol edilir (müsait: 24 saat, pendingDelete: 12 saat, kayıtlı: 30 gün).
+
+Sonuçlar `/domains` sayfasında durum, kaynak ve link sayısına göre filtrelenir; her domainin altında onu linkleyen haberler listelenir.

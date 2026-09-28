@@ -10,6 +10,10 @@
  */
 export type * from './models/User'
 export type * from './models/SourceSite'
+export type * from './models/SourcePage'
+export type * from './models/ScanJob'
+export type * from './models/LinkedDomain'
+export type * from './models/DomainMention'
 export type * from './models/DroppedDomain'
 export type * from './models/Client'
 export type * from './models/DomainAssignment'

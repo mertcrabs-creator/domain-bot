@@ -43,6 +43,7 @@ export type DroppedDomainSumAggregateOutputType = {
 export type DroppedDomainMinAggregateOutputType = {
   id: string | null
   name: string | null
+  linkedDomainId: string | null
   sourceSiteId: string | null
   status: $Enums.DomainStatus | null
   domainAgeYears: number | null
@@ -56,6 +57,7 @@ export type DroppedDomainMinAggregateOutputType = {
 export type DroppedDomainMaxAggregateOutputType = {
   id: string | null
   name: string | null
+  linkedDomainId: string | null
   sourceSiteId: string | null
   status: $Enums.DomainStatus | null
   domainAgeYears: number | null
@@ -69,6 +71,7 @@ export type DroppedDomainMaxAggregateOutputType = {
 export type DroppedDomainCountAggregateOutputType = {
   id: number
   name: number
+  linkedDomainId: number
   sourceSiteId: number
   status: number
   domainAgeYears: number
@@ -98,6 +101,7 @@ export type DroppedDomainSumAggregateInputType = {
 export type DroppedDomainMinAggregateInputType = {
   id?: true
   name?: true
+  linkedDomainId?: true
   sourceSiteId?: true
   status?: true
   domainAgeYears?: true
@@ -111,6 +115,7 @@ export type DroppedDomainMinAggregateInputType = {
 export type DroppedDomainMaxAggregateInputType = {
   id?: true
   name?: true
+  linkedDomainId?: true
   sourceSiteId?: true
   status?: true
   domainAgeYears?: true
@@ -124,6 +129,7 @@ export type DroppedDomainMaxAggregateInputType = {
 export type DroppedDomainCountAggregateInputType = {
   id?: true
   name?: true
+  linkedDomainId?: true
   sourceSiteId?: true
   status?: true
   domainAgeYears?: true
@@ -224,6 +230,7 @@ export type DroppedDomainGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 export type DroppedDomainGroupByOutputType = {
   id: string
   name: string
+  linkedDomainId: string | null
   sourceSiteId: string
   status: $Enums.DomainStatus
   domainAgeYears: number | null
@@ -260,6 +267,7 @@ export type DroppedDomainWhereInput = {
   NOT?: Prisma.DroppedDomainWhereInput | Prisma.DroppedDomainWhereInput[]
   id?: Prisma.StringFilter<"DroppedDomain"> | string
   name?: Prisma.StringFilter<"DroppedDomain"> | string
+  linkedDomainId?: Prisma.StringNullableFilter<"DroppedDomain"> | string | null
   sourceSiteId?: Prisma.StringFilter<"DroppedDomain"> | string
   status?: Prisma.EnumDomainStatusFilter<"DroppedDomain"> | $Enums.DomainStatus
   domainAgeYears?: Prisma.IntNullableFilter<"DroppedDomain"> | number | null
@@ -268,6 +276,7 @@ export type DroppedDomainWhereInput = {
   estimatedValue?: Prisma.IntNullableFilter<"DroppedDomain"> | number | null
   expiresAt?: Prisma.DateTimeNullableFilter<"DroppedDomain"> | Date | string | null
   discoveredAt?: Prisma.DateTimeFilter<"DroppedDomain"> | Date | string
+  linkedDomain?: Prisma.XOR<Prisma.LinkedDomainNullableScalarRelationFilter, Prisma.LinkedDomainWhereInput> | null
   sourceSite?: Prisma.XOR<Prisma.SourceSiteScalarRelationFilter, Prisma.SourceSiteWhereInput>
   assignment?: Prisma.XOR<Prisma.DomainAssignmentNullableScalarRelationFilter, Prisma.DomainAssignmentWhereInput> | null
 }
@@ -275,6 +284,7 @@ export type DroppedDomainWhereInput = {
 export type DroppedDomainOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  linkedDomainId?: Prisma.SortOrderInput | Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   domainAgeYears?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -283,6 +293,7 @@ export type DroppedDomainOrderByWithRelationInput = {
   estimatedValue?: Prisma.SortOrderInput | Prisma.SortOrder
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   discoveredAt?: Prisma.SortOrder
+  linkedDomain?: Prisma.LinkedDomainOrderByWithRelationInput
   sourceSite?: Prisma.SourceSiteOrderByWithRelationInput
   assignment?: Prisma.DomainAssignmentOrderByWithRelationInput
 }
@@ -290,6 +301,7 @@ export type DroppedDomainOrderByWithRelationInput = {
 export type DroppedDomainWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   name?: string
+  linkedDomainId?: string
   AND?: Prisma.DroppedDomainWhereInput | Prisma.DroppedDomainWhereInput[]
   OR?: Prisma.DroppedDomainWhereInput[]
   NOT?: Prisma.DroppedDomainWhereInput | Prisma.DroppedDomainWhereInput[]
@@ -301,13 +313,15 @@ export type DroppedDomainWhereUniqueInput = Prisma.AtLeast<{
   estimatedValue?: Prisma.IntNullableFilter<"DroppedDomain"> | number | null
   expiresAt?: Prisma.DateTimeNullableFilter<"DroppedDomain"> | Date | string | null
   discoveredAt?: Prisma.DateTimeFilter<"DroppedDomain"> | Date | string
+  linkedDomain?: Prisma.XOR<Prisma.LinkedDomainNullableScalarRelationFilter, Prisma.LinkedDomainWhereInput> | null
   sourceSite?: Prisma.XOR<Prisma.SourceSiteScalarRelationFilter, Prisma.SourceSiteWhereInput>
   assignment?: Prisma.XOR<Prisma.DomainAssignmentNullableScalarRelationFilter, Prisma.DomainAssignmentWhereInput> | null
-}, "id" | "name">
+}, "id" | "name" | "linkedDomainId">
 
 export type DroppedDomainOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  linkedDomainId?: Prisma.SortOrderInput | Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   domainAgeYears?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -329,6 +343,7 @@ export type DroppedDomainScalarWhereWithAggregatesInput = {
   NOT?: Prisma.DroppedDomainScalarWhereWithAggregatesInput | Prisma.DroppedDomainScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"DroppedDomain"> | string
   name?: Prisma.StringWithAggregatesFilter<"DroppedDomain"> | string
+  linkedDomainId?: Prisma.StringNullableWithAggregatesFilter<"DroppedDomain"> | string | null
   sourceSiteId?: Prisma.StringWithAggregatesFilter<"DroppedDomain"> | string
   status?: Prisma.EnumDomainStatusWithAggregatesFilter<"DroppedDomain"> | $Enums.DomainStatus
   domainAgeYears?: Prisma.IntNullableWithAggregatesFilter<"DroppedDomain"> | number | null
@@ -349,6 +364,7 @@ export type DroppedDomainCreateInput = {
   estimatedValue?: number | null
   expiresAt?: Date | string | null
   discoveredAt?: Date | string
+  linkedDomain?: Prisma.LinkedDomainCreateNestedOneWithoutDroppedInput
   sourceSite: Prisma.SourceSiteCreateNestedOneWithoutDomainsInput
   assignment?: Prisma.DomainAssignmentCreateNestedOneWithoutDomainInput
 }
@@ -356,6 +372,7 @@ export type DroppedDomainCreateInput = {
 export type DroppedDomainUncheckedCreateInput = {
   id?: string
   name: string
+  linkedDomainId?: string | null
   sourceSiteId: string
   status?: $Enums.DomainStatus
   domainAgeYears?: number | null
@@ -377,6 +394,7 @@ export type DroppedDomainUpdateInput = {
   estimatedValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   discoveredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  linkedDomain?: Prisma.LinkedDomainUpdateOneWithoutDroppedNestedInput
   sourceSite?: Prisma.SourceSiteUpdateOneRequiredWithoutDomainsNestedInput
   assignment?: Prisma.DomainAssignmentUpdateOneWithoutDomainNestedInput
 }
@@ -384,6 +402,7 @@ export type DroppedDomainUpdateInput = {
 export type DroppedDomainUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedDomainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sourceSiteId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumDomainStatusFieldUpdateOperationsInput | $Enums.DomainStatus
   domainAgeYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -398,6 +417,7 @@ export type DroppedDomainUncheckedUpdateInput = {
 export type DroppedDomainCreateManyInput = {
   id?: string
   name: string
+  linkedDomainId?: string | null
   sourceSiteId: string
   status?: $Enums.DomainStatus
   domainAgeYears?: number | null
@@ -423,6 +443,7 @@ export type DroppedDomainUpdateManyMutationInput = {
 export type DroppedDomainUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedDomainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sourceSiteId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumDomainStatusFieldUpdateOperationsInput | $Enums.DomainStatus
   domainAgeYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -443,9 +464,15 @@ export type DroppedDomainOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type DroppedDomainNullableScalarRelationFilter = {
+  is?: Prisma.DroppedDomainWhereInput | null
+  isNot?: Prisma.DroppedDomainWhereInput | null
+}
+
 export type DroppedDomainCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  linkedDomainId?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   domainAgeYears?: Prisma.SortOrder
@@ -466,6 +493,7 @@ export type DroppedDomainAvgOrderByAggregateInput = {
 export type DroppedDomainMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  linkedDomainId?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   domainAgeYears?: Prisma.SortOrder
@@ -479,6 +507,7 @@ export type DroppedDomainMaxOrderByAggregateInput = {
 export type DroppedDomainMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  linkedDomainId?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   domainAgeYears?: Prisma.SortOrder
@@ -543,6 +572,38 @@ export type DroppedDomainUncheckedUpdateManyWithoutSourceSiteNestedInput = {
   deleteMany?: Prisma.DroppedDomainScalarWhereInput | Prisma.DroppedDomainScalarWhereInput[]
 }
 
+export type DroppedDomainCreateNestedOneWithoutLinkedDomainInput = {
+  create?: Prisma.XOR<Prisma.DroppedDomainCreateWithoutLinkedDomainInput, Prisma.DroppedDomainUncheckedCreateWithoutLinkedDomainInput>
+  connectOrCreate?: Prisma.DroppedDomainCreateOrConnectWithoutLinkedDomainInput
+  connect?: Prisma.DroppedDomainWhereUniqueInput
+}
+
+export type DroppedDomainUncheckedCreateNestedOneWithoutLinkedDomainInput = {
+  create?: Prisma.XOR<Prisma.DroppedDomainCreateWithoutLinkedDomainInput, Prisma.DroppedDomainUncheckedCreateWithoutLinkedDomainInput>
+  connectOrCreate?: Prisma.DroppedDomainCreateOrConnectWithoutLinkedDomainInput
+  connect?: Prisma.DroppedDomainWhereUniqueInput
+}
+
+export type DroppedDomainUpdateOneWithoutLinkedDomainNestedInput = {
+  create?: Prisma.XOR<Prisma.DroppedDomainCreateWithoutLinkedDomainInput, Prisma.DroppedDomainUncheckedCreateWithoutLinkedDomainInput>
+  connectOrCreate?: Prisma.DroppedDomainCreateOrConnectWithoutLinkedDomainInput
+  upsert?: Prisma.DroppedDomainUpsertWithoutLinkedDomainInput
+  disconnect?: Prisma.DroppedDomainWhereInput | boolean
+  delete?: Prisma.DroppedDomainWhereInput | boolean
+  connect?: Prisma.DroppedDomainWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DroppedDomainUpdateToOneWithWhereWithoutLinkedDomainInput, Prisma.DroppedDomainUpdateWithoutLinkedDomainInput>, Prisma.DroppedDomainUncheckedUpdateWithoutLinkedDomainInput>
+}
+
+export type DroppedDomainUncheckedUpdateOneWithoutLinkedDomainNestedInput = {
+  create?: Prisma.XOR<Prisma.DroppedDomainCreateWithoutLinkedDomainInput, Prisma.DroppedDomainUncheckedCreateWithoutLinkedDomainInput>
+  connectOrCreate?: Prisma.DroppedDomainCreateOrConnectWithoutLinkedDomainInput
+  upsert?: Prisma.DroppedDomainUpsertWithoutLinkedDomainInput
+  disconnect?: Prisma.DroppedDomainWhereInput | boolean
+  delete?: Prisma.DroppedDomainWhereInput | boolean
+  connect?: Prisma.DroppedDomainWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DroppedDomainUpdateToOneWithWhereWithoutLinkedDomainInput, Prisma.DroppedDomainUpdateWithoutLinkedDomainInput>, Prisma.DroppedDomainUncheckedUpdateWithoutLinkedDomainInput>
+}
+
 export type EnumDomainStatusFieldUpdateOperationsInput = {
   set?: $Enums.DomainStatus
 }
@@ -579,12 +640,14 @@ export type DroppedDomainCreateWithoutSourceSiteInput = {
   estimatedValue?: number | null
   expiresAt?: Date | string | null
   discoveredAt?: Date | string
+  linkedDomain?: Prisma.LinkedDomainCreateNestedOneWithoutDroppedInput
   assignment?: Prisma.DomainAssignmentCreateNestedOneWithoutDomainInput
 }
 
 export type DroppedDomainUncheckedCreateWithoutSourceSiteInput = {
   id?: string
   name: string
+  linkedDomainId?: string | null
   status?: $Enums.DomainStatus
   domainAgeYears?: number | null
   domainAuthority?: number | null
@@ -627,6 +690,7 @@ export type DroppedDomainScalarWhereInput = {
   NOT?: Prisma.DroppedDomainScalarWhereInput | Prisma.DroppedDomainScalarWhereInput[]
   id?: Prisma.StringFilter<"DroppedDomain"> | string
   name?: Prisma.StringFilter<"DroppedDomain"> | string
+  linkedDomainId?: Prisma.StringNullableFilter<"DroppedDomain"> | string | null
   sourceSiteId?: Prisma.StringFilter<"DroppedDomain"> | string
   status?: Prisma.EnumDomainStatusFilter<"DroppedDomain"> | $Enums.DomainStatus
   domainAgeYears?: Prisma.IntNullableFilter<"DroppedDomain"> | number | null
@@ -635,6 +699,78 @@ export type DroppedDomainScalarWhereInput = {
   estimatedValue?: Prisma.IntNullableFilter<"DroppedDomain"> | number | null
   expiresAt?: Prisma.DateTimeNullableFilter<"DroppedDomain"> | Date | string | null
   discoveredAt?: Prisma.DateTimeFilter<"DroppedDomain"> | Date | string
+}
+
+export type DroppedDomainCreateWithoutLinkedDomainInput = {
+  id?: string
+  name: string
+  status?: $Enums.DomainStatus
+  domainAgeYears?: number | null
+  domainAuthority?: number | null
+  backlinkCount?: number | null
+  estimatedValue?: number | null
+  expiresAt?: Date | string | null
+  discoveredAt?: Date | string
+  sourceSite: Prisma.SourceSiteCreateNestedOneWithoutDomainsInput
+  assignment?: Prisma.DomainAssignmentCreateNestedOneWithoutDomainInput
+}
+
+export type DroppedDomainUncheckedCreateWithoutLinkedDomainInput = {
+  id?: string
+  name: string
+  sourceSiteId: string
+  status?: $Enums.DomainStatus
+  domainAgeYears?: number | null
+  domainAuthority?: number | null
+  backlinkCount?: number | null
+  estimatedValue?: number | null
+  expiresAt?: Date | string | null
+  discoveredAt?: Date | string
+  assignment?: Prisma.DomainAssignmentUncheckedCreateNestedOneWithoutDomainInput
+}
+
+export type DroppedDomainCreateOrConnectWithoutLinkedDomainInput = {
+  where: Prisma.DroppedDomainWhereUniqueInput
+  create: Prisma.XOR<Prisma.DroppedDomainCreateWithoutLinkedDomainInput, Prisma.DroppedDomainUncheckedCreateWithoutLinkedDomainInput>
+}
+
+export type DroppedDomainUpsertWithoutLinkedDomainInput = {
+  update: Prisma.XOR<Prisma.DroppedDomainUpdateWithoutLinkedDomainInput, Prisma.DroppedDomainUncheckedUpdateWithoutLinkedDomainInput>
+  create: Prisma.XOR<Prisma.DroppedDomainCreateWithoutLinkedDomainInput, Prisma.DroppedDomainUncheckedCreateWithoutLinkedDomainInput>
+  where?: Prisma.DroppedDomainWhereInput
+}
+
+export type DroppedDomainUpdateToOneWithWhereWithoutLinkedDomainInput = {
+  where?: Prisma.DroppedDomainWhereInput
+  data: Prisma.XOR<Prisma.DroppedDomainUpdateWithoutLinkedDomainInput, Prisma.DroppedDomainUncheckedUpdateWithoutLinkedDomainInput>
+}
+
+export type DroppedDomainUpdateWithoutLinkedDomainInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumDomainStatusFieldUpdateOperationsInput | $Enums.DomainStatus
+  domainAgeYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  domainAuthority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  backlinkCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  estimatedValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  discoveredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sourceSite?: Prisma.SourceSiteUpdateOneRequiredWithoutDomainsNestedInput
+  assignment?: Prisma.DomainAssignmentUpdateOneWithoutDomainNestedInput
+}
+
+export type DroppedDomainUncheckedUpdateWithoutLinkedDomainInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSiteId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumDomainStatusFieldUpdateOperationsInput | $Enums.DomainStatus
+  domainAgeYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  domainAuthority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  backlinkCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  estimatedValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  discoveredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignment?: Prisma.DomainAssignmentUncheckedUpdateOneWithoutDomainNestedInput
 }
 
 export type DroppedDomainCreateWithoutAssignmentInput = {
@@ -647,12 +783,14 @@ export type DroppedDomainCreateWithoutAssignmentInput = {
   estimatedValue?: number | null
   expiresAt?: Date | string | null
   discoveredAt?: Date | string
+  linkedDomain?: Prisma.LinkedDomainCreateNestedOneWithoutDroppedInput
   sourceSite: Prisma.SourceSiteCreateNestedOneWithoutDomainsInput
 }
 
 export type DroppedDomainUncheckedCreateWithoutAssignmentInput = {
   id?: string
   name: string
+  linkedDomainId?: string | null
   sourceSiteId: string
   status?: $Enums.DomainStatus
   domainAgeYears?: number | null
@@ -689,12 +827,14 @@ export type DroppedDomainUpdateWithoutAssignmentInput = {
   estimatedValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   discoveredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  linkedDomain?: Prisma.LinkedDomainUpdateOneWithoutDroppedNestedInput
   sourceSite?: Prisma.SourceSiteUpdateOneRequiredWithoutDomainsNestedInput
 }
 
 export type DroppedDomainUncheckedUpdateWithoutAssignmentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedDomainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sourceSiteId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumDomainStatusFieldUpdateOperationsInput | $Enums.DomainStatus
   domainAgeYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -708,6 +848,7 @@ export type DroppedDomainUncheckedUpdateWithoutAssignmentInput = {
 export type DroppedDomainCreateManySourceSiteInput = {
   id?: string
   name: string
+  linkedDomainId?: string | null
   status?: $Enums.DomainStatus
   domainAgeYears?: number | null
   domainAuthority?: number | null
@@ -727,12 +868,14 @@ export type DroppedDomainUpdateWithoutSourceSiteInput = {
   estimatedValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   discoveredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  linkedDomain?: Prisma.LinkedDomainUpdateOneWithoutDroppedNestedInput
   assignment?: Prisma.DomainAssignmentUpdateOneWithoutDomainNestedInput
 }
 
 export type DroppedDomainUncheckedUpdateWithoutSourceSiteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedDomainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDomainStatusFieldUpdateOperationsInput | $Enums.DomainStatus
   domainAgeYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   domainAuthority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -746,6 +889,7 @@ export type DroppedDomainUncheckedUpdateWithoutSourceSiteInput = {
 export type DroppedDomainUncheckedUpdateManyWithoutSourceSiteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedDomainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDomainStatusFieldUpdateOperationsInput | $Enums.DomainStatus
   domainAgeYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   domainAuthority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -760,6 +904,7 @@ export type DroppedDomainUncheckedUpdateManyWithoutSourceSiteInput = {
 export type DroppedDomainSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  linkedDomainId?: boolean
   sourceSiteId?: boolean
   status?: boolean
   domainAgeYears?: boolean
@@ -768,6 +913,7 @@ export type DroppedDomainSelect<ExtArgs extends runtime.Types.Extensions.Interna
   estimatedValue?: boolean
   expiresAt?: boolean
   discoveredAt?: boolean
+  linkedDomain?: boolean | Prisma.DroppedDomain$linkedDomainArgs<ExtArgs>
   sourceSite?: boolean | Prisma.SourceSiteDefaultArgs<ExtArgs>
   assignment?: boolean | Prisma.DroppedDomain$assignmentArgs<ExtArgs>
 }, ExtArgs["result"]["droppedDomain"]>
@@ -775,6 +921,7 @@ export type DroppedDomainSelect<ExtArgs extends runtime.Types.Extensions.Interna
 export type DroppedDomainSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  linkedDomainId?: boolean
   sourceSiteId?: boolean
   status?: boolean
   domainAgeYears?: boolean
@@ -783,12 +930,14 @@ export type DroppedDomainSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   estimatedValue?: boolean
   expiresAt?: boolean
   discoveredAt?: boolean
+  linkedDomain?: boolean | Prisma.DroppedDomain$linkedDomainArgs<ExtArgs>
   sourceSite?: boolean | Prisma.SourceSiteDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["droppedDomain"]>
 
 export type DroppedDomainSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  linkedDomainId?: boolean
   sourceSiteId?: boolean
   status?: boolean
   domainAgeYears?: boolean
@@ -797,12 +946,14 @@ export type DroppedDomainSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   estimatedValue?: boolean
   expiresAt?: boolean
   discoveredAt?: boolean
+  linkedDomain?: boolean | Prisma.DroppedDomain$linkedDomainArgs<ExtArgs>
   sourceSite?: boolean | Prisma.SourceSiteDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["droppedDomain"]>
 
 export type DroppedDomainSelectScalar = {
   id?: boolean
   name?: boolean
+  linkedDomainId?: boolean
   sourceSiteId?: boolean
   status?: boolean
   domainAgeYears?: boolean
@@ -813,27 +964,32 @@ export type DroppedDomainSelectScalar = {
   discoveredAt?: boolean
 }
 
-export type DroppedDomainOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "sourceSiteId" | "status" | "domainAgeYears" | "domainAuthority" | "backlinkCount" | "estimatedValue" | "expiresAt" | "discoveredAt", ExtArgs["result"]["droppedDomain"]>
+export type DroppedDomainOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "linkedDomainId" | "sourceSiteId" | "status" | "domainAgeYears" | "domainAuthority" | "backlinkCount" | "estimatedValue" | "expiresAt" | "discoveredAt", ExtArgs["result"]["droppedDomain"]>
 export type DroppedDomainInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  linkedDomain?: boolean | Prisma.DroppedDomain$linkedDomainArgs<ExtArgs>
   sourceSite?: boolean | Prisma.SourceSiteDefaultArgs<ExtArgs>
   assignment?: boolean | Prisma.DroppedDomain$assignmentArgs<ExtArgs>
 }
 export type DroppedDomainIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  linkedDomain?: boolean | Prisma.DroppedDomain$linkedDomainArgs<ExtArgs>
   sourceSite?: boolean | Prisma.SourceSiteDefaultArgs<ExtArgs>
 }
 export type DroppedDomainIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  linkedDomain?: boolean | Prisma.DroppedDomain$linkedDomainArgs<ExtArgs>
   sourceSite?: boolean | Prisma.SourceSiteDefaultArgs<ExtArgs>
 }
 
 export type $DroppedDomainPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DroppedDomain"
   objects: {
+    linkedDomain: Prisma.$LinkedDomainPayload<ExtArgs> | null
     sourceSite: Prisma.$SourceSitePayload<ExtArgs>
     assignment: Prisma.$DomainAssignmentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
+    linkedDomainId: string | null
     sourceSiteId: string
     status: $Enums.DomainStatus
     domainAgeYears: number | null
@@ -1236,6 +1392,7 @@ readonly fields: DroppedDomainFieldRefs;
  */
 export interface Prisma__DroppedDomainClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  linkedDomain<T extends Prisma.DroppedDomain$linkedDomainArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DroppedDomain$linkedDomainArgs<ExtArgs>>): Prisma.Prisma__LinkedDomainClient<runtime.Types.Result.GetResult<Prisma.$LinkedDomainPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sourceSite<T extends Prisma.SourceSiteDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SourceSiteDefaultArgs<ExtArgs>>): Prisma.Prisma__SourceSiteClient<runtime.Types.Result.GetResult<Prisma.$SourceSitePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   assignment<T extends Prisma.DroppedDomain$assignmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DroppedDomain$assignmentArgs<ExtArgs>>): Prisma.Prisma__DomainAssignmentClient<runtime.Types.Result.GetResult<Prisma.$DomainAssignmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1269,6 +1426,7 @@ export interface Prisma__DroppedDomainClient<T, Null = never, ExtArgs extends ru
 export interface DroppedDomainFieldRefs {
   readonly id: Prisma.FieldRef<"DroppedDomain", 'String'>
   readonly name: Prisma.FieldRef<"DroppedDomain", 'String'>
+  readonly linkedDomainId: Prisma.FieldRef<"DroppedDomain", 'String'>
   readonly sourceSiteId: Prisma.FieldRef<"DroppedDomain", 'String'>
   readonly status: Prisma.FieldRef<"DroppedDomain", 'DomainStatus'>
   readonly domainAgeYears: Prisma.FieldRef<"DroppedDomain", 'Int'>
@@ -1675,6 +1833,25 @@ export type DroppedDomainDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many DroppedDomains to delete.
    */
   limit?: number
+}
+
+/**
+ * DroppedDomain.linkedDomain
+ */
+export type DroppedDomain$linkedDomainArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LinkedDomain
+   */
+  select?: Prisma.LinkedDomainSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LinkedDomain
+   */
+  omit?: Prisma.LinkedDomainOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LinkedDomainInclude<ExtArgs> | null
+  where?: Prisma.LinkedDomainWhereInput
 }
 
 /**

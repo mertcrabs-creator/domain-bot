@@ -19,3 +19,44 @@ export const DomainStatus = {
 } as const
 
 export type DomainStatus = (typeof DomainStatus)[keyof typeof DomainStatus]
+
+
+export const DomainAvailability = {
+  UNCHECKED: 'UNCHECKED',
+  REGISTERED: 'REGISTERED',
+  EXPIRING: 'EXPIRING',
+  REDEMPTION: 'REDEMPTION',
+  PENDING_DELETE: 'PENDING_DELETE',
+  AVAILABLE: 'AVAILABLE',
+  UNKNOWN: 'UNKNOWN'
+} as const
+
+export type DomainAvailability = (typeof DomainAvailability)[keyof typeof DomainAvailability]
+
+
+export const ScanMode = {
+  SITEMAP: 'SITEMAP',
+  CRAWL: 'CRAWL'
+} as const
+
+export type ScanMode = (typeof ScanMode)[keyof typeof ScanMode]
+
+
+export const ScanJobStatus = {
+  QUEUED: 'QUEUED',
+  RUNNING: 'RUNNING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ScanJobStatus = (typeof ScanJobStatus)[keyof typeof ScanJobStatus]
+
+
+export const SourcePageStatus = {
+  PENDING: 'PENDING',
+  DONE: 'DONE',
+  FAILED: 'FAILED'
+} as const
+
+export type SourcePageStatus = (typeof SourcePageStatus)[keyof typeof SourcePageStatus]

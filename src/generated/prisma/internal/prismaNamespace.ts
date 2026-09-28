@@ -399,6 +399,10 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   SourceSite: 'SourceSite',
+  SourcePage: 'SourcePage',
+  ScanJob: 'ScanJob',
+  LinkedDomain: 'LinkedDomain',
+  DomainMention: 'DomainMention',
   DroppedDomain: 'DroppedDomain',
   Client: 'Client',
   DomainAssignment: 'DomainAssignment'
@@ -417,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "sourceSite" | "droppedDomain" | "client" | "domainAssignment"
+    modelProps: "user" | "sourceSite" | "sourcePage" | "scanJob" | "linkedDomain" | "domainMention" | "droppedDomain" | "client" | "domainAssignment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -566,6 +570,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SourceSiteCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SourceSiteCountAggregateOutputType> | number
+        }
+      }
+    }
+    SourcePage: {
+      payload: Prisma.$SourcePagePayload<ExtArgs>
+      fields: Prisma.SourcePageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SourcePageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SourcePagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SourcePageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SourcePagePayload>
+        }
+        findFirst: {
+          args: Prisma.SourcePageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SourcePagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SourcePageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SourcePagePayload>
+        }
+        findMany: {
+          args: Prisma.SourcePageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SourcePagePayload>[]
+        }
+        create: {
+          args: Prisma.SourcePageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SourcePagePayload>
+        }
+        createMany: {
+          args: Prisma.SourcePageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SourcePageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SourcePagePayload>[]
+        }
+        delete: {
+          args: Prisma.SourcePageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SourcePagePayload>
+        }
+        update: {
+          args: Prisma.SourcePageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SourcePagePayload>
+        }
+        deleteMany: {
+          args: Prisma.SourcePageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SourcePageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SourcePageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SourcePagePayload>[]
+        }
+        upsert: {
+          args: Prisma.SourcePageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SourcePagePayload>
+        }
+        aggregate: {
+          args: Prisma.SourcePageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSourcePage>
+        }
+        groupBy: {
+          args: Prisma.SourcePageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SourcePageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SourcePageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SourcePageCountAggregateOutputType> | number
+        }
+      }
+    }
+    ScanJob: {
+      payload: Prisma.$ScanJobPayload<ExtArgs>
+      fields: Prisma.ScanJobFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ScanJobFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScanJobPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ScanJobFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScanJobPayload>
+        }
+        findFirst: {
+          args: Prisma.ScanJobFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScanJobPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ScanJobFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScanJobPayload>
+        }
+        findMany: {
+          args: Prisma.ScanJobFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScanJobPayload>[]
+        }
+        create: {
+          args: Prisma.ScanJobCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScanJobPayload>
+        }
+        createMany: {
+          args: Prisma.ScanJobCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ScanJobCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScanJobPayload>[]
+        }
+        delete: {
+          args: Prisma.ScanJobDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScanJobPayload>
+        }
+        update: {
+          args: Prisma.ScanJobUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScanJobPayload>
+        }
+        deleteMany: {
+          args: Prisma.ScanJobDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ScanJobUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ScanJobUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScanJobPayload>[]
+        }
+        upsert: {
+          args: Prisma.ScanJobUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScanJobPayload>
+        }
+        aggregate: {
+          args: Prisma.ScanJobAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateScanJob>
+        }
+        groupBy: {
+          args: Prisma.ScanJobGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScanJobGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ScanJobCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScanJobCountAggregateOutputType> | number
+        }
+      }
+    }
+    LinkedDomain: {
+      payload: Prisma.$LinkedDomainPayload<ExtArgs>
+      fields: Prisma.LinkedDomainFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LinkedDomainFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LinkedDomainPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LinkedDomainFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LinkedDomainPayload>
+        }
+        findFirst: {
+          args: Prisma.LinkedDomainFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LinkedDomainPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LinkedDomainFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LinkedDomainPayload>
+        }
+        findMany: {
+          args: Prisma.LinkedDomainFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LinkedDomainPayload>[]
+        }
+        create: {
+          args: Prisma.LinkedDomainCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LinkedDomainPayload>
+        }
+        createMany: {
+          args: Prisma.LinkedDomainCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LinkedDomainCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LinkedDomainPayload>[]
+        }
+        delete: {
+          args: Prisma.LinkedDomainDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LinkedDomainPayload>
+        }
+        update: {
+          args: Prisma.LinkedDomainUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LinkedDomainPayload>
+        }
+        deleteMany: {
+          args: Prisma.LinkedDomainDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LinkedDomainUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LinkedDomainUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LinkedDomainPayload>[]
+        }
+        upsert: {
+          args: Prisma.LinkedDomainUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LinkedDomainPayload>
+        }
+        aggregate: {
+          args: Prisma.LinkedDomainAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLinkedDomain>
+        }
+        groupBy: {
+          args: Prisma.LinkedDomainGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LinkedDomainGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LinkedDomainCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LinkedDomainCountAggregateOutputType> | number
+        }
+      }
+    }
+    DomainMention: {
+      payload: Prisma.$DomainMentionPayload<ExtArgs>
+      fields: Prisma.DomainMentionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DomainMentionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainMentionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DomainMentionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainMentionPayload>
+        }
+        findFirst: {
+          args: Prisma.DomainMentionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainMentionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DomainMentionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainMentionPayload>
+        }
+        findMany: {
+          args: Prisma.DomainMentionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainMentionPayload>[]
+        }
+        create: {
+          args: Prisma.DomainMentionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainMentionPayload>
+        }
+        createMany: {
+          args: Prisma.DomainMentionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DomainMentionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainMentionPayload>[]
+        }
+        delete: {
+          args: Prisma.DomainMentionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainMentionPayload>
+        }
+        update: {
+          args: Prisma.DomainMentionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainMentionPayload>
+        }
+        deleteMany: {
+          args: Prisma.DomainMentionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DomainMentionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DomainMentionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainMentionPayload>[]
+        }
+        upsert: {
+          args: Prisma.DomainMentionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainMentionPayload>
+        }
+        aggregate: {
+          args: Prisma.DomainMentionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDomainMention>
+        }
+        groupBy: {
+          args: Prisma.DomainMentionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DomainMentionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DomainMentionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DomainMentionCountAggregateOutputType> | number
         }
       }
     }
@@ -850,6 +1150,7 @@ export const SourceSiteScalarFieldEnum = {
   name: 'name',
   url: 'url',
   isActive: 'isActive',
+  mode: 'mode',
   lastScanned: 'lastScanned',
   createdAt: 'createdAt'
 } as const
@@ -857,9 +1158,79 @@ export const SourceSiteScalarFieldEnum = {
 export type SourceSiteScalarFieldEnum = (typeof SourceSiteScalarFieldEnum)[keyof typeof SourceSiteScalarFieldEnum]
 
 
+export const SourcePageScalarFieldEnum = {
+  id: 'id',
+  sourceSiteId: 'sourceSiteId',
+  url: 'url',
+  status: 'status',
+  depth: 'depth',
+  lastmod: 'lastmod',
+  publishedAt: 'publishedAt',
+  attempts: 'attempts',
+  fetchedAt: 'fetchedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type SourcePageScalarFieldEnum = (typeof SourcePageScalarFieldEnum)[keyof typeof SourcePageScalarFieldEnum]
+
+
+export const ScanJobScalarFieldEnum = {
+  id: 'id',
+  sourceSiteId: 'sourceSiteId',
+  status: 'status',
+  phase: 'phase',
+  pagesTotal: 'pagesTotal',
+  pagesDone: 'pagesDone',
+  pagesFailed: 'pagesFailed',
+  domainsFound: 'domainsFound',
+  mentionsFound: 'mentionsFound',
+  lastMessage: 'lastMessage',
+  error: 'error',
+  heartbeatAt: 'heartbeatAt',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ScanJobScalarFieldEnum = (typeof ScanJobScalarFieldEnum)[keyof typeof ScanJobScalarFieldEnum]
+
+
+export const LinkedDomainScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  availability: 'availability',
+  rdapStatuses: 'rdapStatuses',
+  registeredAt: 'registeredAt',
+  expiresAt: 'expiresAt',
+  registrar: 'registrar',
+  checkedAt: 'checkedAt',
+  nextCheckAt: 'nextCheckAt',
+  checkError: 'checkError',
+  mentionCount: 'mentionCount',
+  firstSeenAt: 'firstSeenAt'
+} as const
+
+export type LinkedDomainScalarFieldEnum = (typeof LinkedDomainScalarFieldEnum)[keyof typeof LinkedDomainScalarFieldEnum]
+
+
+export const DomainMentionScalarFieldEnum = {
+  id: 'id',
+  linkedDomainId: 'linkedDomainId',
+  sourcePageId: 'sourcePageId',
+  sourceSiteId: 'sourceSiteId',
+  targetUrl: 'targetUrl',
+  anchorText: 'anchorText',
+  rel: 'rel',
+  createdAt: 'createdAt'
+} as const
+
+export type DomainMentionScalarFieldEnum = (typeof DomainMentionScalarFieldEnum)[keyof typeof DomainMentionScalarFieldEnum]
+
+
 export const DroppedDomainScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  linkedDomainId: 'linkedDomainId',
   sourceSiteId: 'sourceSiteId',
   status: 'status',
   domainAgeYears: 'domainAgeYears',
@@ -962,16 +1333,30 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'DomainStatus'
+ * Reference to a field of type 'ScanMode'
  */
-export type EnumDomainStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DomainStatus'>
+export type EnumScanModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ScanMode'>
     
 
 
 /**
- * Reference to a field of type 'DomainStatus[]'
+ * Reference to a field of type 'ScanMode[]'
  */
-export type ListEnumDomainStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DomainStatus[]'>
+export type ListEnumScanModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ScanMode[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SourcePageStatus'
+ */
+export type EnumSourcePageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SourcePageStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SourcePageStatus[]'
+ */
+export type ListEnumSourcePageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SourcePageStatus[]'>
     
 
 
@@ -986,6 +1371,48 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ScanJobStatus'
+ */
+export type EnumScanJobStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ScanJobStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ScanJobStatus[]'
+ */
+export type ListEnumScanJobStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ScanJobStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DomainAvailability'
+ */
+export type EnumDomainAvailabilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DomainAvailability'>
+    
+
+
+/**
+ * Reference to a field of type 'DomainAvailability[]'
+ */
+export type ListEnumDomainAvailabilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DomainAvailability[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DomainStatus'
+ */
+export type EnumDomainStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DomainStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DomainStatus[]'
+ */
+export type ListEnumDomainStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DomainStatus[]'>
     
 
 
@@ -1155,6 +1582,10 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   sourceSite?: Prisma.SourceSiteOmit
+  sourcePage?: Prisma.SourcePageOmit
+  scanJob?: Prisma.ScanJobOmit
+  linkedDomain?: Prisma.LinkedDomainOmit
+  domainMention?: Prisma.DomainMentionOmit
   droppedDomain?: Prisma.DroppedDomainOmit
   client?: Prisma.ClientOmit
   domainAssignment?: Prisma.DomainAssignmentOmit

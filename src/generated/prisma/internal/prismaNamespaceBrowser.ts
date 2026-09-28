@@ -53,6 +53,10 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   SourceSite: 'SourceSite',
+  SourcePage: 'SourcePage',
+  ScanJob: 'ScanJob',
+  LinkedDomain: 'LinkedDomain',
+  DomainMention: 'DomainMention',
   DroppedDomain: 'DroppedDomain',
   Client: 'Client',
   DomainAssignment: 'DomainAssignment'
@@ -94,6 +98,7 @@ export const SourceSiteScalarFieldEnum = {
   name: 'name',
   url: 'url',
   isActive: 'isActive',
+  mode: 'mode',
   lastScanned: 'lastScanned',
   createdAt: 'createdAt'
 } as const
@@ -101,9 +106,79 @@ export const SourceSiteScalarFieldEnum = {
 export type SourceSiteScalarFieldEnum = (typeof SourceSiteScalarFieldEnum)[keyof typeof SourceSiteScalarFieldEnum]
 
 
+export const SourcePageScalarFieldEnum = {
+  id: 'id',
+  sourceSiteId: 'sourceSiteId',
+  url: 'url',
+  status: 'status',
+  depth: 'depth',
+  lastmod: 'lastmod',
+  publishedAt: 'publishedAt',
+  attempts: 'attempts',
+  fetchedAt: 'fetchedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type SourcePageScalarFieldEnum = (typeof SourcePageScalarFieldEnum)[keyof typeof SourcePageScalarFieldEnum]
+
+
+export const ScanJobScalarFieldEnum = {
+  id: 'id',
+  sourceSiteId: 'sourceSiteId',
+  status: 'status',
+  phase: 'phase',
+  pagesTotal: 'pagesTotal',
+  pagesDone: 'pagesDone',
+  pagesFailed: 'pagesFailed',
+  domainsFound: 'domainsFound',
+  mentionsFound: 'mentionsFound',
+  lastMessage: 'lastMessage',
+  error: 'error',
+  heartbeatAt: 'heartbeatAt',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ScanJobScalarFieldEnum = (typeof ScanJobScalarFieldEnum)[keyof typeof ScanJobScalarFieldEnum]
+
+
+export const LinkedDomainScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  availability: 'availability',
+  rdapStatuses: 'rdapStatuses',
+  registeredAt: 'registeredAt',
+  expiresAt: 'expiresAt',
+  registrar: 'registrar',
+  checkedAt: 'checkedAt',
+  nextCheckAt: 'nextCheckAt',
+  checkError: 'checkError',
+  mentionCount: 'mentionCount',
+  firstSeenAt: 'firstSeenAt'
+} as const
+
+export type LinkedDomainScalarFieldEnum = (typeof LinkedDomainScalarFieldEnum)[keyof typeof LinkedDomainScalarFieldEnum]
+
+
+export const DomainMentionScalarFieldEnum = {
+  id: 'id',
+  linkedDomainId: 'linkedDomainId',
+  sourcePageId: 'sourcePageId',
+  sourceSiteId: 'sourceSiteId',
+  targetUrl: 'targetUrl',
+  anchorText: 'anchorText',
+  rel: 'rel',
+  createdAt: 'createdAt'
+} as const
+
+export type DomainMentionScalarFieldEnum = (typeof DomainMentionScalarFieldEnum)[keyof typeof DomainMentionScalarFieldEnum]
+
+
 export const DroppedDomainScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  linkedDomainId: 'linkedDomainId',
   sourceSiteId: 'sourceSiteId',
   status: 'status',
   domainAgeYears: 'domainAgeYears',

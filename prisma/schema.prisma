@@ -16,6 +16,35 @@ enum DomainStatus {
   ARCHIVED
 }
 
+enum DomainAvailability {
+  UNCHECKED
+  REGISTERED
+  EXPIRING
+  REDEMPTION
+  PENDING_DELETE
+  AVAILABLE
+  UNKNOWN
+}
+
+enum ScanMode {
+  SITEMAP
+  CRAWL
+}
+
+enum ScanJobStatus {
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum SourcePageStatus {
+  PENDING
+  DONE
+  FAILED
+}
+
 model User {
   id          String   @id @default(cuid())
   name        String
@@ -33,14 +62,98 @@ model SourceSite {
   name        String
   url         String          @unique
   isActive    Boolean         @default(true)
+  mode        ScanMode        @default(SITEMAP)
   lastScanned DateTime?
   createdAt   DateTime        @default(now())
   domains     DroppedDomain[]
+  pages       SourcePage[]
+  jobs        ScanJob[]
+  mentions    DomainMention[]
+}
+
+// Every article/page of a source site. Acts as a persistent, resumable crawl queue.
+model SourcePage {
+  id           String           @id @default(cuid())
+  sourceSiteId String
+  sourceSite   SourceSite       @relation(fields: [sourceSiteId], references: [id], onDelete: Cascade)
+  url          String
+  status       SourcePageStatus @default(PENDING)
+  depth        Int              @default(0)
+  lastmod      DateTime?
+  publishedAt  DateTime?
+  attempts     Int              @default(0)
+  fetchedAt    DateTime?
+  createdAt    DateTime         @default(now())
+  mentions     DomainMention[]
+
+  @@unique([sourceSiteId, url])
+  @@index([sourceSiteId, status])
+}
+
+model ScanJob {
+  id               String        @id @default(cuid())
+  sourceSiteId     String
+  sourceSite       SourceSite    @relation(fields: [sourceSiteId], references: [id], onDelete: Cascade)
+  status           ScanJobStatus @default(QUEUED)
+  phase            String        @default("waiting")
+  pagesTotal       Int           @default(0)
+  pagesDone        Int           @default(0)
+  pagesFailed      Int           @default(0)
+  domainsFound     Int           @default(0)
+  mentionsFound    Int           @default(0)
+  lastMessage      String?
+  error            String?
+  heartbeatAt      DateTime?
+  startedAt        DateTime?
+  finishedAt       DateTime?
+  createdAt        DateTime      @default(now())
+
+  @@index([status])
+}
+
+// Every external .com domain linked from a source article, with its registry state.
+model LinkedDomain {
+  id             String             @id @default(cuid())
+  name           String             @unique
+  availability   DomainAvailability @default(UNCHECKED)
+  rdapStatuses   String[]
+  registeredAt   DateTime?
+  expiresAt      DateTime?
+  registrar      String?
+  checkedAt      DateTime?
+  nextCheckAt    DateTime           @default(now())
+  checkError     String?
+  mentionCount   Int                @default(0)
+  firstSeenAt    DateTime           @default(now())
+  mentions       DomainMention[]
+  dropped        DroppedDomain?
+
+  @@index([availability])
+  @@index([nextCheckAt])
+}
+
+model DomainMention {
+  id             String       @id @default(cuid())
+  linkedDomainId String
+  linkedDomain   LinkedDomain @relation(fields: [linkedDomainId], references: [id], onDelete: Cascade)
+  sourcePageId   String
+  sourcePage     SourcePage   @relation(fields: [sourcePageId], references: [id], onDelete: Cascade)
+  sourceSiteId   String
+  sourceSite     SourceSite   @relation(fields: [sourceSiteId], references: [id], onDelete: Cascade)
+  targetUrl      String
+  anchorText     String?
+  rel            String?
+  createdAt      DateTime     @default(now())
+
+  @@unique([linkedDomainId, sourcePageId, targetUrl])
+  @@index([sourceSiteId])
 }
 
 model DroppedDomain {
   id             String           @id @default(cuid())
   name           String           @unique
+  linkedDomainId String?          @unique
+  linkedDomain   LinkedDomain?    @relation(fields: [linkedDomainId], references: [id], onDelete: SetNull)
   sourceSiteId   String
   sourceSite     SourceSite       @relation(fields: [sourceSiteId], references: [id], onDelete: Cascade)
   status         DomainStatus     @default(DISCOVERED)

@@ -317,10 +317,6 @@ export type ClientScalarRelationFilter = {
   isNot?: Prisma.ClientWhereInput
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type ClientCreateNestedOneWithoutAssignmentsInput = {
   create?: Prisma.XOR<Prisma.ClientCreateWithoutAssignmentsInput, Prisma.ClientUncheckedCreateWithoutAssignmentsInput>
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutAssignmentsInput
