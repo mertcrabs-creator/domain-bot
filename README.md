@@ -34,6 +34,19 @@ npm run worker   # tarama ve domain kontrol işçisi
 
 Taramalar web isteği içinde değil, worker'da çalışır. Worker kapanırsa yarım kalan tarama bir sonraki açılışta kaldığı yerden devam eder. Aynı anda tek bir worker çalıştırın.
 
+## Yayına alma
+
+Web arayüzü **Vercel**'de, worker **Railway**'de çalışır; ikisi yalnızca aynı PostgreSQL'i paylaşır.
+
+1. **Veritabanı** — Neon / Supabase / Railway Postgres. Bir kere:
+   ```powershell
+   $env:DATABASE_URL="..."; npx prisma migrate deploy; npm run db:seed-admins
+   ```
+2. **Vercel (site)** — Repoyu import et, `DATABASE_URL` ekle (Neon/Supabase'de *pooled* bağlantı adresini kullan).
+3. **Railway (worker)** — Aynı repodan servis oluştur. `railway.json` sayesinde `Dockerfile.worker` ile build edilir (Playwright + Chromium hazır gelir). Env: `DATABASE_URL`, isteğe bağlı `SCANNER_MAX_PAGES`, `SCANNER_CONCURRENCY`. En az ~1 GB RAM. Replica sayısı **1** kalmalı.
+
+`playwright` paketini güncellerken `Dockerfile.worker`'daki image etiketini de aynı sürüme çek.
+
 ## Nasıl çalışır
 
 1. **Keşif** — *Tüm arşiv* modunda `robots.txt` / `sitemap.xml` üzerinden bütün makale URL'leri `SourcePage` tablosuna yazılır (tag/kategori/yazar sayfaları elenir). *Site içi* modda verilen URL'den başlayıp site içinde 3 tık derinliğe kadar gezilir.

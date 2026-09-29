@@ -1,0 +1,13 @@
+# Scan worker (`npm run worker`) — the web app is deployed separately on Vercel.
+# The Playwright image ships Node plus Chromium and its system libraries; keep the tag in sync with the playwright package.
+FROM mcr.microsoft.com/playwright:v1.63.0-noble
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY . .
+
+ENV NODE_ENV=production
+CMD ["npm", "run", "worker"]
