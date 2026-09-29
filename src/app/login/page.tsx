@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("burakonal7@gmail.com");
-  const [password, setPassword] = useState("20Burak26@+.");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -87,15 +87,6 @@ export default function LoginPage() {
               {isSubmitting ? "Giriş yapılıyor..." : "Giriş yap"}
             </button>
           </form>
-
-          <div className="demo-users">
-            <p>Hızlı giriş kullanıcıları</p>
-            <ul>
-              <li>burakonal7@gmail.com</li>
-              <li>ozgur.yilmaz@crabsmedia.com</li>
-              <li>mert.ozturk@crabsmedia.com</li>
-            </ul>
-          </div>
         </div>
       </div>
     </main>
