@@ -2,7 +2,6 @@ import * as cheerio from "cheerio";
 
 import { fetchRaw } from "@/lib/scan/fetcher";
 
-const maxSitemapFiles = 50_000;
 const defaultSitemapPaths = ["/sitemap_index.xml", "/sitemap.xml", "/sitemap-index.xml", "/news-sitemap.xml"];
 
 export type SitemapUrl = { url: string; lastmod: Date | null };
@@ -29,10 +28,12 @@ async function robotsSitemaps(origin: string) {
 /**
  * Walks every sitemap of a site and streams the page URLs it lists to `onUrls`.
  * Child sitemaps whose lastmod is older than `since` are skipped, so re-scans only read what changed.
+ * Stops after `maxFiles` sitemap files so page crawling can start without reading huge sitemap trees.
  */
 export async function walkSitemaps(options: {
   origin: string;
   since: Date | null;
+  maxFiles: number;
   onUrls: (urls: SitemapUrl[]) => Promise<void>;
   onProgress?: (filesRead: number, urlsFound: number) => Promise<void>;
   shouldStop?: () => Promise<boolean>;
@@ -43,7 +44,7 @@ export async function walkSitemaps(options: {
   let filesRead = 0;
   let urlsFound = 0;
 
-  while (queue.length > 0 && filesRead < maxSitemapFiles) {
+  while (queue.length > 0 && filesRead < options.maxFiles) {
     const sitemapUrl = queue.shift()!;
     let body: string | null = null;
     try {
@@ -81,5 +82,5 @@ export async function walkSitemaps(options: {
     }
   }
 
-  return { filesRead, urlsFound };
+  return { filesRead, urlsFound, truncated: queue.length > 0 && filesRead >= options.maxFiles };
 }

@@ -14,7 +14,9 @@ npx playwright install chromium   # engelleyen siteler için headless tarayıcı
 ```env
 DATABASE_URL="postgresql://..."
 SCANNER_MAX_PAGES=2000     # bir tarama çalıştırmasında işlenecek max sayfa (0 = limitsiz)
-SCANNER_CONCURRENCY=4      # opsiyonel, aynı anda çekilen sayfa sayısı
+SCANNER_JOB_CONCURRENCY=3  # opsiyonel, aynı anda taranan kaynak sayısı
+SCANNER_CONCURRENCY=4      # opsiyonel, her taramada aynı anda çekilen sayfa sayısı
+SCANNER_MAX_SITEMAPS=100   # opsiyonel, bu kadar sitemap dosyası okununca URL taramasına geçilir
 ```
 
 ```powershell

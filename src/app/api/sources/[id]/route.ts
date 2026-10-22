@@ -14,6 +14,7 @@ export async function DELETE(
   const assigned = await prisma.domainAssignment.count({ where: { domain: { sourceSiteId: id } } });
   if (assigned > 0) return NextResponse.json({ error: "Bu kaynaktan müşteriye atanmış domainler var, silinemez." }, { status: 409 });
 
-  await prisma.sourceSite.delete({ where: { id } });
+  // deleteMany is a no-op when the source is already gone (double click, two tabs), instead of throwing P2025.
+  await prisma.sourceSite.deleteMany({ where: { id } });
   return new NextResponse(null, { status: 204 });
 }

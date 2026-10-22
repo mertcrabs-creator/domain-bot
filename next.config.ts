@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // nginx compresses responses in production; Next's own gzip only duplicates the work.
+  compress: false,
   images: {
     remotePatterns: [
       {

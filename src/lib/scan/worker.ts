@@ -6,8 +6,10 @@ import { PageFetcher } from "@/lib/scan/fetcher";
 import { candidateAvailabilities, checkDomain, nextCheckDate, RdapRateLimitError, type DomainCheck } from "@/lib/scan/rdap";
 import { walkSitemaps } from "@/lib/scan/sitemap";
 
+const jobConcurrency = Math.max(1, Number(process.env.SCANNER_JOB_CONCURRENCY ?? 3));
 const pageConcurrency = Number(process.env.SCANNER_CONCURRENCY ?? 4);
 const maxPagesPerJob = Number(process.env.SCANNER_MAX_PAGES ?? 0); // 0 = no limit
+const maxSitemapFiles = Number(process.env.SCANNER_MAX_SITEMAPS ?? 100);
 const rdapConcurrency = 4;
 const crawlDelayMs = 300;
 const maxCrawlDepth = 3;
@@ -153,14 +155,16 @@ async function runJob(job: ScanJob) {
 
     if (source.mode === "SITEMAP") {
       await touchJob(job.id, { phase: "discovering", lastMessage: "Sitemap'ler okunuyor..." });
-      const { filesRead, urlsFound } = await walkSitemaps({
+      const { filesRead, urlsFound, truncated } = await walkSitemaps({
         origin: sourceUrl.origin,
         since: source.lastScanned,
+        maxFiles: maxSitemapFiles,
         onUrls: (urls) => enqueuePages(source.id, sourceDomain, urls.map((entry) => ({ ...entry, depth: 0 })), true),
         onProgress: (files, urls) => touchJob(job.id, { lastMessage: `${files} sitemap dosyası okundu, ${urls} URL bulundu` }),
         shouldStop: () => isCancelled(job.id),
       });
-      log(`Job ${job.id}: ${filesRead} sitemap files, ${urlsFound} URLs`);
+      log(`Job ${job.id}: ${filesRead} sitemap files, ${urlsFound} URLs${truncated ? " (sitemap limit reached)" : ""}`);
+      if (truncated) await touchJob(job.id, { lastMessage: `${maxSitemapFiles} sitemap limitine ulaşıldı, URL taramasına geçiliyor` });
       if (urlsFound === 0 && (await prisma.sourcePage.count({ where: { sourceSiteId: source.id } })) === 0) {
         crawlInternal = true;
         await touchJob(job.id, { lastMessage: "Sitemap bulunamadı, site içi taramaya geçildi" });
@@ -234,11 +238,18 @@ async function claimNextJob() {
   return claimed.count === 1 ? job : null;
 }
 
-/** A single worker is assumed: on startup every RUNNING job was interrupted; later only stale ones are. */
+// Jobs this process is working on right now; never requeued as stale, even if a slow step delays their heartbeat.
+const activeJobIds = new Set<string>();
+
+/** A single worker process is assumed: on startup every RUNNING job was interrupted; later only stale ones are. */
 async function requeueInterruptedJobs(onlyStale: boolean) {
   const { count } = await prisma.scanJob.updateMany({
     where: onlyStale
-      ? { status: "RUNNING", OR: [{ heartbeatAt: null }, { heartbeatAt: { lt: new Date(Date.now() - staleJobMs) } }] }
+      ? {
+          status: "RUNNING",
+          id: { notIn: [...activeJobIds] },
+          OR: [{ heartbeatAt: null }, { heartbeatAt: { lt: new Date(Date.now() - staleJobMs) } }],
+        }
       : { status: "RUNNING" },
     data: { status: "QUEUED", lastMessage: "Worker yeniden başladı, kaldığı yerden devam edecek" },
   });
@@ -324,16 +335,18 @@ async function checkerLoop() {
   }
 }
 
-export async function startWorker() {
-  log("domain.bot worker started");
-  await requeueInterruptedJobs(false);
-  void checkerLoop();
-
+/** One of `jobConcurrency` lanes; each scans one source at a time, so several sources run in parallel. */
+async function jobLoop() {
   while (true) {
     try {
       const job = await claimNextJob();
       if (job) {
-        await runJob(job);
+        activeJobIds.add(job.id);
+        try {
+          await runJob(job);
+        } finally {
+          activeJobIds.delete(job.id);
+        }
       } else {
         await requeueInterruptedJobs(true);
         await sleep(3000);
@@ -343,4 +356,22 @@ export async function startWorker() {
       await sleep(10_000);
     }
   }
+}
+
+export async function startWorker() {
+  // A stray rejection (e.g. a dropped DB connection inside a callback) must not take the whole worker down.
+  process.on("unhandledRejection", (reason) => log(`Unhandled rejection: ${reason instanceof Error ? reason.stack : reason}`));
+
+  log(`domain.bot worker started (${jobConcurrency} parallel scans)`);
+  while (true) {
+    try {
+      await requeueInterruptedJobs(false);
+      break;
+    } catch (error) {
+      log(`Startup error, retrying in 10s: ${error instanceof Error ? error.message : error}`);
+      await sleep(10_000);
+    }
+  }
+  void checkerLoop();
+  await Promise.all(Array.from({ length: jobConcurrency }, () => jobLoop()));
 }
