@@ -10,6 +10,7 @@
  */
 export type * from './models/User'
 export type * from './models/SourceSite'
+export type * from './models/PageBatch'
 export type * from './models/SourcePage'
 export type * from './models/ScanJob'
 export type * from './models/LinkedDomain'

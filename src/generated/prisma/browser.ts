@@ -28,6 +28,11 @@ export type User = Prisma.UserModel
  */
 export type SourceSite = Prisma.SourceSiteModel
 /**
+ * Model PageBatch
+ * 
+ */
+export type PageBatch = Prisma.PageBatchModel
+/**
  * Model SourcePage
  * 
  */

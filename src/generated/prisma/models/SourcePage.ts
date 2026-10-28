@@ -27,11 +27,13 @@ export type AggregateSourcePage = {
 }
 
 export type SourcePageAvgAggregateOutputType = {
+  batch: number | null
   depth: number | null
   attempts: number | null
 }
 
 export type SourcePageSumAggregateOutputType = {
+  batch: number | null
   depth: number | null
   attempts: number | null
 }
@@ -40,6 +42,7 @@ export type SourcePageMinAggregateOutputType = {
   id: string | null
   sourceSiteId: string | null
   url: string | null
+  batch: number | null
   status: $Enums.SourcePageStatus | null
   depth: number | null
   lastmod: Date | null
@@ -53,6 +56,7 @@ export type SourcePageMaxAggregateOutputType = {
   id: string | null
   sourceSiteId: string | null
   url: string | null
+  batch: number | null
   status: $Enums.SourcePageStatus | null
   depth: number | null
   lastmod: Date | null
@@ -66,6 +70,7 @@ export type SourcePageCountAggregateOutputType = {
   id: number
   sourceSiteId: number
   url: number
+  batch: number
   status: number
   depth: number
   lastmod: number
@@ -78,11 +83,13 @@ export type SourcePageCountAggregateOutputType = {
 
 
 export type SourcePageAvgAggregateInputType = {
+  batch?: true
   depth?: true
   attempts?: true
 }
 
 export type SourcePageSumAggregateInputType = {
+  batch?: true
   depth?: true
   attempts?: true
 }
@@ -91,6 +98,7 @@ export type SourcePageMinAggregateInputType = {
   id?: true
   sourceSiteId?: true
   url?: true
+  batch?: true
   status?: true
   depth?: true
   lastmod?: true
@@ -104,6 +112,7 @@ export type SourcePageMaxAggregateInputType = {
   id?: true
   sourceSiteId?: true
   url?: true
+  batch?: true
   status?: true
   depth?: true
   lastmod?: true
@@ -117,6 +126,7 @@ export type SourcePageCountAggregateInputType = {
   id?: true
   sourceSiteId?: true
   url?: true
+  batch?: true
   status?: true
   depth?: true
   lastmod?: true
@@ -217,6 +227,7 @@ export type SourcePageGroupByOutputType = {
   id: string
   sourceSiteId: string
   url: string
+  batch: number
   status: $Enums.SourcePageStatus
   depth: number
   lastmod: Date | null
@@ -253,6 +264,7 @@ export type SourcePageWhereInput = {
   id?: Prisma.StringFilter<"SourcePage"> | string
   sourceSiteId?: Prisma.StringFilter<"SourcePage"> | string
   url?: Prisma.StringFilter<"SourcePage"> | string
+  batch?: Prisma.IntFilter<"SourcePage"> | number
   status?: Prisma.EnumSourcePageStatusFilter<"SourcePage"> | $Enums.SourcePageStatus
   depth?: Prisma.IntFilter<"SourcePage"> | number
   lastmod?: Prisma.DateTimeNullableFilter<"SourcePage"> | Date | string | null
@@ -268,6 +280,7 @@ export type SourcePageOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   url?: Prisma.SortOrder
+  batch?: Prisma.SortOrder
   status?: Prisma.SortOrder
   depth?: Prisma.SortOrder
   lastmod?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -287,6 +300,7 @@ export type SourcePageWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.SourcePageWhereInput | Prisma.SourcePageWhereInput[]
   sourceSiteId?: Prisma.StringFilter<"SourcePage"> | string
   url?: Prisma.StringFilter<"SourcePage"> | string
+  batch?: Prisma.IntFilter<"SourcePage"> | number
   status?: Prisma.EnumSourcePageStatusFilter<"SourcePage"> | $Enums.SourcePageStatus
   depth?: Prisma.IntFilter<"SourcePage"> | number
   lastmod?: Prisma.DateTimeNullableFilter<"SourcePage"> | Date | string | null
@@ -302,6 +316,7 @@ export type SourcePageOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   url?: Prisma.SortOrder
+  batch?: Prisma.SortOrder
   status?: Prisma.SortOrder
   depth?: Prisma.SortOrder
   lastmod?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -323,6 +338,7 @@ export type SourcePageScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"SourcePage"> | string
   sourceSiteId?: Prisma.StringWithAggregatesFilter<"SourcePage"> | string
   url?: Prisma.StringWithAggregatesFilter<"SourcePage"> | string
+  batch?: Prisma.IntWithAggregatesFilter<"SourcePage"> | number
   status?: Prisma.EnumSourcePageStatusWithAggregatesFilter<"SourcePage"> | $Enums.SourcePageStatus
   depth?: Prisma.IntWithAggregatesFilter<"SourcePage"> | number
   lastmod?: Prisma.DateTimeNullableWithAggregatesFilter<"SourcePage"> | Date | string | null
@@ -335,6 +351,7 @@ export type SourcePageScalarWhereWithAggregatesInput = {
 export type SourcePageCreateInput = {
   id?: string
   url: string
+  batch?: number
   status?: $Enums.SourcePageStatus
   depth?: number
   lastmod?: Date | string | null
@@ -350,6 +367,7 @@ export type SourcePageUncheckedCreateInput = {
   id?: string
   sourceSiteId: string
   url: string
+  batch?: number
   status?: $Enums.SourcePageStatus
   depth?: number
   lastmod?: Date | string | null
@@ -363,6 +381,7 @@ export type SourcePageUncheckedCreateInput = {
 export type SourcePageUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  batch?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSourcePageStatusFieldUpdateOperationsInput | $Enums.SourcePageStatus
   depth?: Prisma.IntFieldUpdateOperationsInput | number
   lastmod?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -378,6 +397,7 @@ export type SourcePageUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sourceSiteId?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  batch?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSourcePageStatusFieldUpdateOperationsInput | $Enums.SourcePageStatus
   depth?: Prisma.IntFieldUpdateOperationsInput | number
   lastmod?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -392,6 +412,7 @@ export type SourcePageCreateManyInput = {
   id?: string
   sourceSiteId: string
   url: string
+  batch?: number
   status?: $Enums.SourcePageStatus
   depth?: number
   lastmod?: Date | string | null
@@ -404,6 +425,7 @@ export type SourcePageCreateManyInput = {
 export type SourcePageUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  batch?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSourcePageStatusFieldUpdateOperationsInput | $Enums.SourcePageStatus
   depth?: Prisma.IntFieldUpdateOperationsInput | number
   lastmod?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -417,6 +439,7 @@ export type SourcePageUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sourceSiteId?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  batch?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSourcePageStatusFieldUpdateOperationsInput | $Enums.SourcePageStatus
   depth?: Prisma.IntFieldUpdateOperationsInput | number
   lastmod?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -445,6 +468,7 @@ export type SourcePageCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   url?: Prisma.SortOrder
+  batch?: Prisma.SortOrder
   status?: Prisma.SortOrder
   depth?: Prisma.SortOrder
   lastmod?: Prisma.SortOrder
@@ -455,6 +479,7 @@ export type SourcePageCountOrderByAggregateInput = {
 }
 
 export type SourcePageAvgOrderByAggregateInput = {
+  batch?: Prisma.SortOrder
   depth?: Prisma.SortOrder
   attempts?: Prisma.SortOrder
 }
@@ -463,6 +488,7 @@ export type SourcePageMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   url?: Prisma.SortOrder
+  batch?: Prisma.SortOrder
   status?: Prisma.SortOrder
   depth?: Prisma.SortOrder
   lastmod?: Prisma.SortOrder
@@ -476,6 +502,7 @@ export type SourcePageMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   url?: Prisma.SortOrder
+  batch?: Prisma.SortOrder
   status?: Prisma.SortOrder
   depth?: Prisma.SortOrder
   lastmod?: Prisma.SortOrder
@@ -486,6 +513,7 @@ export type SourcePageMinOrderByAggregateInput = {
 }
 
 export type SourcePageSumOrderByAggregateInput = {
+  batch?: Prisma.SortOrder
   depth?: Prisma.SortOrder
   attempts?: Prisma.SortOrder
 }
@@ -541,14 +569,6 @@ export type EnumSourcePageStatusFieldUpdateOperationsInput = {
   set?: $Enums.SourcePageStatus
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type SourcePageCreateNestedOneWithoutMentionsInput = {
   create?: Prisma.XOR<Prisma.SourcePageCreateWithoutMentionsInput, Prisma.SourcePageUncheckedCreateWithoutMentionsInput>
   connectOrCreate?: Prisma.SourcePageCreateOrConnectWithoutMentionsInput
@@ -566,6 +586,7 @@ export type SourcePageUpdateOneRequiredWithoutMentionsNestedInput = {
 export type SourcePageCreateWithoutSourceSiteInput = {
   id?: string
   url: string
+  batch?: number
   status?: $Enums.SourcePageStatus
   depth?: number
   lastmod?: Date | string | null
@@ -579,6 +600,7 @@ export type SourcePageCreateWithoutSourceSiteInput = {
 export type SourcePageUncheckedCreateWithoutSourceSiteInput = {
   id?: string
   url: string
+  batch?: number
   status?: $Enums.SourcePageStatus
   depth?: number
   lastmod?: Date | string | null
@@ -622,6 +644,7 @@ export type SourcePageScalarWhereInput = {
   id?: Prisma.StringFilter<"SourcePage"> | string
   sourceSiteId?: Prisma.StringFilter<"SourcePage"> | string
   url?: Prisma.StringFilter<"SourcePage"> | string
+  batch?: Prisma.IntFilter<"SourcePage"> | number
   status?: Prisma.EnumSourcePageStatusFilter<"SourcePage"> | $Enums.SourcePageStatus
   depth?: Prisma.IntFilter<"SourcePage"> | number
   lastmod?: Prisma.DateTimeNullableFilter<"SourcePage"> | Date | string | null
@@ -634,6 +657,7 @@ export type SourcePageScalarWhereInput = {
 export type SourcePageCreateWithoutMentionsInput = {
   id?: string
   url: string
+  batch?: number
   status?: $Enums.SourcePageStatus
   depth?: number
   lastmod?: Date | string | null
@@ -648,6 +672,7 @@ export type SourcePageUncheckedCreateWithoutMentionsInput = {
   id?: string
   sourceSiteId: string
   url: string
+  batch?: number
   status?: $Enums.SourcePageStatus
   depth?: number
   lastmod?: Date | string | null
@@ -676,6 +701,7 @@ export type SourcePageUpdateToOneWithWhereWithoutMentionsInput = {
 export type SourcePageUpdateWithoutMentionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  batch?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSourcePageStatusFieldUpdateOperationsInput | $Enums.SourcePageStatus
   depth?: Prisma.IntFieldUpdateOperationsInput | number
   lastmod?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -690,6 +716,7 @@ export type SourcePageUncheckedUpdateWithoutMentionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sourceSiteId?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  batch?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSourcePageStatusFieldUpdateOperationsInput | $Enums.SourcePageStatus
   depth?: Prisma.IntFieldUpdateOperationsInput | number
   lastmod?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -702,6 +729,7 @@ export type SourcePageUncheckedUpdateWithoutMentionsInput = {
 export type SourcePageCreateManySourceSiteInput = {
   id?: string
   url: string
+  batch?: number
   status?: $Enums.SourcePageStatus
   depth?: number
   lastmod?: Date | string | null
@@ -714,6 +742,7 @@ export type SourcePageCreateManySourceSiteInput = {
 export type SourcePageUpdateWithoutSourceSiteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  batch?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSourcePageStatusFieldUpdateOperationsInput | $Enums.SourcePageStatus
   depth?: Prisma.IntFieldUpdateOperationsInput | number
   lastmod?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -727,6 +756,7 @@ export type SourcePageUpdateWithoutSourceSiteInput = {
 export type SourcePageUncheckedUpdateWithoutSourceSiteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  batch?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSourcePageStatusFieldUpdateOperationsInput | $Enums.SourcePageStatus
   depth?: Prisma.IntFieldUpdateOperationsInput | number
   lastmod?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -740,6 +770,7 @@ export type SourcePageUncheckedUpdateWithoutSourceSiteInput = {
 export type SourcePageUncheckedUpdateManyWithoutSourceSiteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  batch?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSourcePageStatusFieldUpdateOperationsInput | $Enums.SourcePageStatus
   depth?: Prisma.IntFieldUpdateOperationsInput | number
   lastmod?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -784,6 +815,7 @@ export type SourcePageSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id?: boolean
   sourceSiteId?: boolean
   url?: boolean
+  batch?: boolean
   status?: boolean
   depth?: boolean
   lastmod?: boolean
@@ -800,6 +832,7 @@ export type SourcePageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   sourceSiteId?: boolean
   url?: boolean
+  batch?: boolean
   status?: boolean
   depth?: boolean
   lastmod?: boolean
@@ -814,6 +847,7 @@ export type SourcePageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   sourceSiteId?: boolean
   url?: boolean
+  batch?: boolean
   status?: boolean
   depth?: boolean
   lastmod?: boolean
@@ -828,6 +862,7 @@ export type SourcePageSelectScalar = {
   id?: boolean
   sourceSiteId?: boolean
   url?: boolean
+  batch?: boolean
   status?: boolean
   depth?: boolean
   lastmod?: boolean
@@ -837,7 +872,7 @@ export type SourcePageSelectScalar = {
   createdAt?: boolean
 }
 
-export type SourcePageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sourceSiteId" | "url" | "status" | "depth" | "lastmod" | "publishedAt" | "attempts" | "fetchedAt" | "createdAt", ExtArgs["result"]["sourcePage"]>
+export type SourcePageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sourceSiteId" | "url" | "batch" | "status" | "depth" | "lastmod" | "publishedAt" | "attempts" | "fetchedAt" | "createdAt", ExtArgs["result"]["sourcePage"]>
 export type SourcePageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sourceSite?: boolean | Prisma.SourceSiteDefaultArgs<ExtArgs>
   mentions?: boolean | Prisma.SourcePage$mentionsArgs<ExtArgs>
@@ -860,6 +895,7 @@ export type $SourcePagePayload<ExtArgs extends runtime.Types.Extensions.Internal
     id: string
     sourceSiteId: string
     url: string
+    batch: number
     status: $Enums.SourcePageStatus
     depth: number
     lastmod: Date | null
@@ -1295,6 +1331,7 @@ export interface SourcePageFieldRefs {
   readonly id: Prisma.FieldRef<"SourcePage", 'String'>
   readonly sourceSiteId: Prisma.FieldRef<"SourcePage", 'String'>
   readonly url: Prisma.FieldRef<"SourcePage", 'String'>
+  readonly batch: Prisma.FieldRef<"SourcePage", 'Int'>
   readonly status: Prisma.FieldRef<"SourcePage", 'SourcePageStatus'>
   readonly depth: Prisma.FieldRef<"SourcePage", 'Int'>
   readonly lastmod: Prisma.FieldRef<"SourcePage", 'DateTime'>

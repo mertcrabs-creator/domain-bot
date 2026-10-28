@@ -2,7 +2,9 @@ import type { DomainAvailability } from "@/generated/prisma/client";
 
 const rdapBaseUrl = "https://rdap.verisign.com/com/v1/domain/";
 const requestTimeoutMs = 15_000;
-const expiringWindowMs = 30 * 24 * 60 * 60 * 1000;
+const dayMs = 24 * 60 * 60 * 1000;
+// Registered domains with less than this left until expiry are kept as candidates (product decision).
+export const expiringWindowMs = 365 * dayMs;
 
 export class RdapRateLimitError extends Error {}
 
@@ -72,14 +74,29 @@ const recheckAfterMs: Record<DomainAvailability, number> = {
   UNCHECKED: 0,
   AVAILABLE: 24 * hour,
   PENDING_DELETE: 12 * hour,
-  REDEMPTION: 3 * 24 * hour,
-  EXPIRING: 3 * 24 * hour,
-  REGISTERED: 30 * 24 * hour,
+  REDEMPTION: 3 * dayMs,
+  EXPIRING: 3 * dayMs,
+  REGISTERED: 30 * dayMs,
   UNKNOWN: 6 * hour,
 };
+// A domain can still be deleted or transferred early, so even far-off expiries are looked at again eventually.
+const maxRegisteredRecheckMs = 180 * dayMs;
 
-export function nextCheckDate(availability: DomainAvailability) {
-  return new Date(Date.now() + recheckAfterMs[availability]);
+/**
+ * When to look at a domain again. Registered domains are not re-checked until they enter the expiry window,
+ * and expiring ones more often as their expiry gets close, which keeps registry lookups (and DB writes) low.
+ */
+export function nextCheckDate(availability: DomainAvailability, expiresAt: Date | null = null) {
+  const now = Date.now();
+  const left = expiresAt ? expiresAt.getTime() - now : null;
+  if (availability === "REGISTERED" && left !== null) {
+    return new Date(now + Math.min(maxRegisteredRecheckMs, Math.max(recheckAfterMs.REGISTERED, left - expiringWindowMs)));
+  }
+  if (availability === "EXPIRING" && left !== null) {
+    if (left > 90 * dayMs) return new Date(now + 14 * dayMs);
+    if (left > 30 * dayMs) return new Date(now + 7 * dayMs);
+  }
+  return new Date(now + recheckAfterMs[availability]);
 }
 
 export const candidateAvailabilities: DomainAvailability[] = ["AVAILABLE", "PENDING_DELETE", "REDEMPTION", "EXPIRING"];

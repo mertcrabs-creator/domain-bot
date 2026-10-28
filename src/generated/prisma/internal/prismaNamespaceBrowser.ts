@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   SourceSite: 'SourceSite',
+  PageBatch: 'PageBatch',
   SourcePage: 'SourcePage',
   ScanJob: 'ScanJob',
   LinkedDomain: 'LinkedDomain',
@@ -100,16 +101,31 @@ export const SourceSiteScalarFieldEnum = {
   isActive: 'isActive',
   mode: 'mode',
   lastScanned: 'lastScanned',
+  sitemapUrls: 'sitemapUrls',
   createdAt: 'createdAt'
 } as const
 
 export type SourceSiteScalarFieldEnum = (typeof SourceSiteScalarFieldEnum)[keyof typeof SourceSiteScalarFieldEnum]
 
 
+export const PageBatchScalarFieldEnum = {
+  id: 'id',
+  sourceSiteId: 'sourceSiteId',
+  number: 'number',
+  pagesTotal: 'pagesTotal',
+  pagesDone: 'pagesDone',
+  pagesFailed: 'pagesFailed',
+  createdAt: 'createdAt'
+} as const
+
+export type PageBatchScalarFieldEnum = (typeof PageBatchScalarFieldEnum)[keyof typeof PageBatchScalarFieldEnum]
+
+
 export const SourcePageScalarFieldEnum = {
   id: 'id',
   sourceSiteId: 'sourceSiteId',
   url: 'url',
+  batch: 'batch',
   status: 'status',
   depth: 'depth',
   lastmod: 'lastmod',
@@ -126,6 +142,7 @@ export const ScanJobScalarFieldEnum = {
   id: 'id',
   sourceSiteId: 'sourceSiteId',
   status: 'status',
+  batch: 'batch',
   phase: 'phase',
   pagesTotal: 'pagesTotal',
   pagesDone: 'pagesDone',

@@ -12,7 +12,7 @@ const availabilityTone: Partial<Record<DomainAvailability, { label: string; tone
   AVAILABLE: { label: "Kayıt edilebilir", tone: "new" },
   PENDING_DELETE: { label: "Silinmek üzere", tone: "review" },
   REDEMPTION: { label: "Redemption", tone: "review" },
-  EXPIRING: { label: "Süresi dolmuş", tone: "assigned" },
+  EXPIRING: { label: "1 yıldan az kalan", tone: "assigned" },
 };
 
 const dayMs = 24 * 60 * 60 * 1000;

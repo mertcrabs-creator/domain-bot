@@ -4,23 +4,29 @@ import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { registrableDomain } from "@/lib/scan/domains";
 import { candidateAvailabilities } from "@/lib/scan/rdap";
+import { parseManualSitemaps } from "@/lib/scan/manual-sitemaps";
 
 export async function GET() {
   const session = await getSession();
   if (!session?.fullAccess) return NextResponse.json({ error: "Yetkisiz erişim." }, { status: 401 });
 
   const sources = await prisma.sourceSite.findMany({
+    where: { isActive: true }, // inactive sources are being deleted by the worker
     orderBy: { createdAt: "desc" },
-    include: { jobs: { orderBy: { createdAt: "desc" }, take: 1 } },
+    include: {
+      jobs: { orderBy: { createdAt: "desc" }, take: 1 },
+      batches: { orderBy: { number: "asc" }, select: { number: true, pagesTotal: true, pagesDone: true, pagesFailed: true } },
+    },
   });
 
-  const candidateCounts = await Promise.all(
-    sources.map((source) =>
-      prisma.linkedDomain.count({
-        where: { availability: { in: candidateAvailabilities }, mentions: { some: { sourceSiteId: source.id } } },
-      }),
-    ),
-  );
+  // One grouped query for all sources (this route is polled while a scan runs); it starts from the few candidate domains.
+  const candidateRows = await prisma.$queryRaw<Array<{ sourceSiteId: string; count: bigint }>>`
+    SELECT m."sourceSiteId", count(DISTINCT d."id") AS count
+    FROM "LinkedDomain" d JOIN "DomainMention" m ON m."linkedDomainId" = d."id"
+    WHERE d."availability" = ANY(${candidateAvailabilities}::text[]::"DomainAvailability"[])
+    GROUP BY m."sourceSiteId"`;
+  const candidateBySource = new Map(candidateRows.map((row) => [row.sourceSiteId, Number(row.count)]));
+  const candidateCounts = sources.map((source) => candidateBySource.get(source.id) ?? 0);
 
   // A job still queued after this long means no worker process is picking jobs up.
   const workerMissingAfter = new Date(Date.now() - 15_000);
@@ -38,11 +44,13 @@ export async function POST(request: Request) {
   if (!session?.fullAccess) return NextResponse.json({ error: "Yetkisiz erişim." }, { status: 401 });
 
   try {
-    const body = (await request.json()) as { name?: string; url?: string; mode?: string };
+    const body = (await request.json()) as { name?: string; url?: string; mode?: string; sitemapUrls?: unknown };
     const name = body.name?.trim();
     const url = body.url?.trim();
     const mode = body.mode === "CRAWL" ? "CRAWL" : "SITEMAP";
     if (!name || !url) return NextResponse.json({ error: "Kaynak adı ve URL gerekli." }, { status: 400 });
+    const sitemaps = parseManualSitemaps(body.sitemapUrls);
+    if ("error" in sitemaps) return NextResponse.json({ error: sitemaps.error }, { status: 400 });
 
     const parsed = new URL(url);
     if (!['http:', 'https:'].includes(parsed.protocol)) {
@@ -52,14 +60,18 @@ export async function POST(request: Request) {
     if (mode === "SITEMAP") {
       // A sitemap scan covers the whole site, so a second sitemap source on the same domain would duplicate it.
       const domain = registrableDomain(parsed.hostname)?.domain;
-      const sitemapSources = await prisma.sourceSite.findMany({ where: { mode: "SITEMAP" }, select: { name: true, url: true } });
+      const sitemapSources = await prisma.sourceSite.findMany({ where: { mode: "SITEMAP", isActive: true }, select: { name: true, url: true } });
       const duplicate = sitemapSources.find((source) => registrableDomain(new URL(source.url).hostname)?.domain === domain);
       if (duplicate) {
         return NextResponse.json({ error: `${domain} arşivi zaten "${duplicate.name}" kaynağıyla taranıyor.` }, { status: 409 });
       }
     }
 
-    const source = await prisma.sourceSite.create({ data: { name, url, mode } });
+    // The URL stays taken until the worker has finished deleting the old source.
+    const deleting = await prisma.sourceSite.findFirst({ where: { url, isActive: false }, select: { id: true } });
+    if (deleting) return NextResponse.json({ error: "Bu URL ile eklenmiş eski kaynak hâlâ siliniyor, birkaç dakika sonra tekrar deneyin." }, { status: 409 });
+
+    const source = await prisma.sourceSite.create({ data: { name, url, mode, sitemapUrls: sitemaps.urls } });
     return NextResponse.json(source, { status: 201 });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Kaynak eklenemedi.";

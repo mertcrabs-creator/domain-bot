@@ -608,14 +608,6 @@ export type EnumDomainStatusFieldUpdateOperationsInput = {
   set?: $Enums.DomainStatus
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type DroppedDomainCreateNestedOneWithoutAssignmentInput = {
   create?: Prisma.XOR<Prisma.DroppedDomainCreateWithoutAssignmentInput, Prisma.DroppedDomainUncheckedCreateWithoutAssignmentInput>
   connectOrCreate?: Prisma.DroppedDomainCreateOrConnectWithoutAssignmentInput

@@ -13,7 +13,7 @@ const availabilityLabels: Record<DomainAvailability, string> = {
   AVAILABLE: "Kayıt edilebilir",
   PENDING_DELETE: "Silinmek üzere",
   REDEMPTION: "Redemption",
-  EXPIRING: "Süresi dolmuş / dolmak üzere",
+  EXPIRING: "Bitişe 1 yıldan az",
   REGISTERED: "Kayıtlı",
   UNCHECKED: "Kontrol bekliyor",
   UNKNOWN: "Kontrol edilemedi",
@@ -24,7 +24,7 @@ const tabs: Array<{ key: string; label: string }> = [
   { key: "AVAILABLE", label: "Kayıt edilebilir" },
   { key: "PENDING_DELETE", label: "Silinmek üzere" },
   { key: "REDEMPTION", label: "Redemption" },
-  { key: "EXPIRING", label: "Süresi dolmuş" },
+  { key: "EXPIRING", label: "1 yıldan az kalan" },
   { key: "UNCHECKED", label: "Kontrol bekliyor" },
   { key: "UNKNOWN", label: "Hatalı" },
   { key: "REGISTERED", label: "Kayıtlı" },
@@ -88,7 +88,7 @@ export default async function DomainsPage({ searchParams }: { searchParams: Sear
     }),
     prisma.linkedDomain.count({ where }),
     prisma.linkedDomain.groupBy({ by: ["availability"], where: baseWhere, _count: true }),
-    prisma.sourceSite.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true } }),
+    prisma.sourceSite.findMany({ where: { isActive: true }, orderBy: { name: "asc" }, select: { id: true, name: true } }),
   ]);
 
   const countFor = (key: string) =>

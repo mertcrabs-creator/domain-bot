@@ -64,11 +64,29 @@ model SourceSite {
   isActive    Boolean         @default(true)
   mode        ScanMode        @default(SITEMAP)
   lastScanned DateTime?
+  // Entered by hand when the sitemaps cannot be found automatically; when set, discovery is skipped.
+  sitemapUrls String[]        @default([])
   createdAt   DateTime        @default(now())
   domains     DroppedDomain[]
   pages       SourcePage[]
+  batches     PageBatch[]
   jobs        ScanJob[]
   mentions    DomainMention[]
+}
+
+// A slice of ~50,000 sitemap pages of a source, crawled by its own manually started job.
+// Holds the slice's counters so the UI never has to count SourcePage rows.
+model PageBatch {
+  id           String     @id @default(cuid())
+  sourceSiteId String
+  sourceSite   SourceSite @relation(fields: [sourceSiteId], references: [id], onDelete: Cascade)
+  number       Int
+  pagesTotal   Int        @default(0)
+  pagesDone    Int        @default(0)
+  pagesFailed  Int        @default(0)
+  createdAt    DateTime   @default(now())
+
+  @@unique([sourceSiteId, number])
 }
 
 // Every article/page of a source site. Acts as a persistent, resumable crawl queue.
@@ -77,6 +95,8 @@ model SourcePage {
   sourceSiteId String
   sourceSite   SourceSite       @relation(fields: [sourceSiteId], references: [id], onDelete: Cascade)
   url          String
+  // PageBatch number; 0 = not split into batches (site crawl pages, or sitemap pages not assigned yet).
+  batch        Int              @default(0)
   status       SourcePageStatus @default(PENDING)
   depth        Int              @default(0)
   lastmod      DateTime?
@@ -87,7 +107,8 @@ model SourcePage {
   mentions     DomainMention[]
 
   @@unique([sourceSiteId, url])
-  @@index([sourceSiteId, status])
+  // Matches the worker's "next PENDING pages of a batch, oldest first" query, so it never sorts the whole queue.
+  @@index([sourceSiteId, batch, status, lastmod, createdAt])
 }
 
 model ScanJob {
@@ -95,6 +116,8 @@ model ScanJob {
   sourceSiteId     String
   sourceSite       SourceSite    @relation(fields: [sourceSiteId], references: [id], onDelete: Cascade)
   status           ScanJobStatus @default(QUEUED)
+  // Null: read the sitemaps and split the pages into batches (or crawl the site in CRAWL mode). Set: crawl that PageBatch.
+  batch            Int?
   phase            String        @default("waiting")
   pagesTotal       Int           @default(0)
   pagesDone        Int           @default(0)
@@ -147,6 +170,7 @@ model DomainMention {
 
   @@unique([linkedDomainId, sourcePageId, targetUrl])
   @@index([sourceSiteId])
+  @@index([sourcePageId])
 }
 
 model DroppedDomain {

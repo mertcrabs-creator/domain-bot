@@ -399,6 +399,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   SourceSite: 'SourceSite',
+  PageBatch: 'PageBatch',
   SourcePage: 'SourcePage',
   ScanJob: 'ScanJob',
   LinkedDomain: 'LinkedDomain',
@@ -421,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "sourceSite" | "sourcePage" | "scanJob" | "linkedDomain" | "domainMention" | "droppedDomain" | "client" | "domainAssignment"
+    modelProps: "user" | "sourceSite" | "pageBatch" | "sourcePage" | "scanJob" | "linkedDomain" | "domainMention" | "droppedDomain" | "client" | "domainAssignment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -570,6 +571,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SourceSiteCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SourceSiteCountAggregateOutputType> | number
+        }
+      }
+    }
+    PageBatch: {
+      payload: Prisma.$PageBatchPayload<ExtArgs>
+      fields: Prisma.PageBatchFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PageBatchFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageBatchPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PageBatchFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageBatchPayload>
+        }
+        findFirst: {
+          args: Prisma.PageBatchFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageBatchPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PageBatchFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageBatchPayload>
+        }
+        findMany: {
+          args: Prisma.PageBatchFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageBatchPayload>[]
+        }
+        create: {
+          args: Prisma.PageBatchCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageBatchPayload>
+        }
+        createMany: {
+          args: Prisma.PageBatchCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PageBatchCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageBatchPayload>[]
+        }
+        delete: {
+          args: Prisma.PageBatchDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageBatchPayload>
+        }
+        update: {
+          args: Prisma.PageBatchUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageBatchPayload>
+        }
+        deleteMany: {
+          args: Prisma.PageBatchDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PageBatchUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PageBatchUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageBatchPayload>[]
+        }
+        upsert: {
+          args: Prisma.PageBatchUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageBatchPayload>
+        }
+        aggregate: {
+          args: Prisma.PageBatchAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePageBatch>
+        }
+        groupBy: {
+          args: Prisma.PageBatchGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PageBatchGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PageBatchCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PageBatchCountAggregateOutputType> | number
         }
       }
     }
@@ -1152,16 +1227,31 @@ export const SourceSiteScalarFieldEnum = {
   isActive: 'isActive',
   mode: 'mode',
   lastScanned: 'lastScanned',
+  sitemapUrls: 'sitemapUrls',
   createdAt: 'createdAt'
 } as const
 
 export type SourceSiteScalarFieldEnum = (typeof SourceSiteScalarFieldEnum)[keyof typeof SourceSiteScalarFieldEnum]
 
 
+export const PageBatchScalarFieldEnum = {
+  id: 'id',
+  sourceSiteId: 'sourceSiteId',
+  number: 'number',
+  pagesTotal: 'pagesTotal',
+  pagesDone: 'pagesDone',
+  pagesFailed: 'pagesFailed',
+  createdAt: 'createdAt'
+} as const
+
+export type PageBatchScalarFieldEnum = (typeof PageBatchScalarFieldEnum)[keyof typeof PageBatchScalarFieldEnum]
+
+
 export const SourcePageScalarFieldEnum = {
   id: 'id',
   sourceSiteId: 'sourceSiteId',
   url: 'url',
+  batch: 'batch',
   status: 'status',
   depth: 'depth',
   lastmod: 'lastmod',
@@ -1178,6 +1268,7 @@ export const ScanJobScalarFieldEnum = {
   id: 'id',
   sourceSiteId: 'sourceSiteId',
   status: 'status',
+  batch: 'batch',
   phase: 'phase',
   pagesTotal: 'pagesTotal',
   pagesDone: 'pagesDone',
@@ -1347,20 +1438,6 @@ export type ListEnumScanModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
- * Reference to a field of type 'SourcePageStatus'
- */
-export type EnumSourcePageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SourcePageStatus'>
-    
-
-
-/**
- * Reference to a field of type 'SourcePageStatus[]'
- */
-export type ListEnumSourcePageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SourcePageStatus[]'>
-    
-
-
-/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1371,6 +1448,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SourcePageStatus'
+ */
+export type EnumSourcePageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SourcePageStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SourcePageStatus[]'
+ */
+export type ListEnumSourcePageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SourcePageStatus[]'>
     
 
 
@@ -1582,6 +1673,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   sourceSite?: Prisma.SourceSiteOmit
+  pageBatch?: Prisma.PageBatchOmit
   sourcePage?: Prisma.SourcePageOmit
   scanJob?: Prisma.ScanJobOmit
   linkedDomain?: Prisma.LinkedDomainOmit

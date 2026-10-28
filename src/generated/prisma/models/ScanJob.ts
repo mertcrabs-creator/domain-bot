@@ -27,6 +27,7 @@ export type AggregateScanJob = {
 }
 
 export type ScanJobAvgAggregateOutputType = {
+  batch: number | null
   pagesTotal: number | null
   pagesDone: number | null
   pagesFailed: number | null
@@ -35,6 +36,7 @@ export type ScanJobAvgAggregateOutputType = {
 }
 
 export type ScanJobSumAggregateOutputType = {
+  batch: number | null
   pagesTotal: number | null
   pagesDone: number | null
   pagesFailed: number | null
@@ -46,6 +48,7 @@ export type ScanJobMinAggregateOutputType = {
   id: string | null
   sourceSiteId: string | null
   status: $Enums.ScanJobStatus | null
+  batch: number | null
   phase: string | null
   pagesTotal: number | null
   pagesDone: number | null
@@ -64,6 +67,7 @@ export type ScanJobMaxAggregateOutputType = {
   id: string | null
   sourceSiteId: string | null
   status: $Enums.ScanJobStatus | null
+  batch: number | null
   phase: string | null
   pagesTotal: number | null
   pagesDone: number | null
@@ -82,6 +86,7 @@ export type ScanJobCountAggregateOutputType = {
   id: number
   sourceSiteId: number
   status: number
+  batch: number
   phase: number
   pagesTotal: number
   pagesDone: number
@@ -99,6 +104,7 @@ export type ScanJobCountAggregateOutputType = {
 
 
 export type ScanJobAvgAggregateInputType = {
+  batch?: true
   pagesTotal?: true
   pagesDone?: true
   pagesFailed?: true
@@ -107,6 +113,7 @@ export type ScanJobAvgAggregateInputType = {
 }
 
 export type ScanJobSumAggregateInputType = {
+  batch?: true
   pagesTotal?: true
   pagesDone?: true
   pagesFailed?: true
@@ -118,6 +125,7 @@ export type ScanJobMinAggregateInputType = {
   id?: true
   sourceSiteId?: true
   status?: true
+  batch?: true
   phase?: true
   pagesTotal?: true
   pagesDone?: true
@@ -136,6 +144,7 @@ export type ScanJobMaxAggregateInputType = {
   id?: true
   sourceSiteId?: true
   status?: true
+  batch?: true
   phase?: true
   pagesTotal?: true
   pagesDone?: true
@@ -154,6 +163,7 @@ export type ScanJobCountAggregateInputType = {
   id?: true
   sourceSiteId?: true
   status?: true
+  batch?: true
   phase?: true
   pagesTotal?: true
   pagesDone?: true
@@ -259,6 +269,7 @@ export type ScanJobGroupByOutputType = {
   id: string
   sourceSiteId: string
   status: $Enums.ScanJobStatus
+  batch: number | null
   phase: string
   pagesTotal: number
   pagesDone: number
@@ -300,6 +311,7 @@ export type ScanJobWhereInput = {
   id?: Prisma.StringFilter<"ScanJob"> | string
   sourceSiteId?: Prisma.StringFilter<"ScanJob"> | string
   status?: Prisma.EnumScanJobStatusFilter<"ScanJob"> | $Enums.ScanJobStatus
+  batch?: Prisma.IntNullableFilter<"ScanJob"> | number | null
   phase?: Prisma.StringFilter<"ScanJob"> | string
   pagesTotal?: Prisma.IntFilter<"ScanJob"> | number
   pagesDone?: Prisma.IntFilter<"ScanJob"> | number
@@ -319,6 +331,7 @@ export type ScanJobOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  batch?: Prisma.SortOrderInput | Prisma.SortOrder
   phase?: Prisma.SortOrder
   pagesTotal?: Prisma.SortOrder
   pagesDone?: Prisma.SortOrder
@@ -341,6 +354,7 @@ export type ScanJobWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ScanJobWhereInput | Prisma.ScanJobWhereInput[]
   sourceSiteId?: Prisma.StringFilter<"ScanJob"> | string
   status?: Prisma.EnumScanJobStatusFilter<"ScanJob"> | $Enums.ScanJobStatus
+  batch?: Prisma.IntNullableFilter<"ScanJob"> | number | null
   phase?: Prisma.StringFilter<"ScanJob"> | string
   pagesTotal?: Prisma.IntFilter<"ScanJob"> | number
   pagesDone?: Prisma.IntFilter<"ScanJob"> | number
@@ -360,6 +374,7 @@ export type ScanJobOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  batch?: Prisma.SortOrderInput | Prisma.SortOrder
   phase?: Prisma.SortOrder
   pagesTotal?: Prisma.SortOrder
   pagesDone?: Prisma.SortOrder
@@ -386,6 +401,7 @@ export type ScanJobScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"ScanJob"> | string
   sourceSiteId?: Prisma.StringWithAggregatesFilter<"ScanJob"> | string
   status?: Prisma.EnumScanJobStatusWithAggregatesFilter<"ScanJob"> | $Enums.ScanJobStatus
+  batch?: Prisma.IntNullableWithAggregatesFilter<"ScanJob"> | number | null
   phase?: Prisma.StringWithAggregatesFilter<"ScanJob"> | string
   pagesTotal?: Prisma.IntWithAggregatesFilter<"ScanJob"> | number
   pagesDone?: Prisma.IntWithAggregatesFilter<"ScanJob"> | number
@@ -403,6 +419,7 @@ export type ScanJobScalarWhereWithAggregatesInput = {
 export type ScanJobCreateInput = {
   id?: string
   status?: $Enums.ScanJobStatus
+  batch?: number | null
   phase?: string
   pagesTotal?: number
   pagesDone?: number
@@ -422,6 +439,7 @@ export type ScanJobUncheckedCreateInput = {
   id?: string
   sourceSiteId: string
   status?: $Enums.ScanJobStatus
+  batch?: number | null
   phase?: string
   pagesTotal?: number
   pagesDone?: number
@@ -439,6 +457,7 @@ export type ScanJobUncheckedCreateInput = {
 export type ScanJobUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumScanJobStatusFieldUpdateOperationsInput | $Enums.ScanJobStatus
+  batch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   pagesTotal?: Prisma.IntFieldUpdateOperationsInput | number
   pagesDone?: Prisma.IntFieldUpdateOperationsInput | number
@@ -458,6 +477,7 @@ export type ScanJobUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sourceSiteId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumScanJobStatusFieldUpdateOperationsInput | $Enums.ScanJobStatus
+  batch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   pagesTotal?: Prisma.IntFieldUpdateOperationsInput | number
   pagesDone?: Prisma.IntFieldUpdateOperationsInput | number
@@ -476,6 +496,7 @@ export type ScanJobCreateManyInput = {
   id?: string
   sourceSiteId: string
   status?: $Enums.ScanJobStatus
+  batch?: number | null
   phase?: string
   pagesTotal?: number
   pagesDone?: number
@@ -493,6 +514,7 @@ export type ScanJobCreateManyInput = {
 export type ScanJobUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumScanJobStatusFieldUpdateOperationsInput | $Enums.ScanJobStatus
+  batch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   pagesTotal?: Prisma.IntFieldUpdateOperationsInput | number
   pagesDone?: Prisma.IntFieldUpdateOperationsInput | number
@@ -511,6 +533,7 @@ export type ScanJobUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sourceSiteId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumScanJobStatusFieldUpdateOperationsInput | $Enums.ScanJobStatus
+  batch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   pagesTotal?: Prisma.IntFieldUpdateOperationsInput | number
   pagesDone?: Prisma.IntFieldUpdateOperationsInput | number
@@ -539,6 +562,7 @@ export type ScanJobCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  batch?: Prisma.SortOrder
   phase?: Prisma.SortOrder
   pagesTotal?: Prisma.SortOrder
   pagesDone?: Prisma.SortOrder
@@ -554,6 +578,7 @@ export type ScanJobCountOrderByAggregateInput = {
 }
 
 export type ScanJobAvgOrderByAggregateInput = {
+  batch?: Prisma.SortOrder
   pagesTotal?: Prisma.SortOrder
   pagesDone?: Prisma.SortOrder
   pagesFailed?: Prisma.SortOrder
@@ -565,6 +590,7 @@ export type ScanJobMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  batch?: Prisma.SortOrder
   phase?: Prisma.SortOrder
   pagesTotal?: Prisma.SortOrder
   pagesDone?: Prisma.SortOrder
@@ -583,6 +609,7 @@ export type ScanJobMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sourceSiteId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  batch?: Prisma.SortOrder
   phase?: Prisma.SortOrder
   pagesTotal?: Prisma.SortOrder
   pagesDone?: Prisma.SortOrder
@@ -598,6 +625,7 @@ export type ScanJobMinOrderByAggregateInput = {
 }
 
 export type ScanJobSumOrderByAggregateInput = {
+  batch?: Prisma.SortOrder
   pagesTotal?: Prisma.SortOrder
   pagesDone?: Prisma.SortOrder
   pagesFailed?: Prisma.SortOrder
@@ -651,6 +679,14 @@ export type EnumScanJobStatusFieldUpdateOperationsInput = {
   set?: $Enums.ScanJobStatus
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
@@ -658,6 +694,7 @@ export type NullableStringFieldUpdateOperationsInput = {
 export type ScanJobCreateWithoutSourceSiteInput = {
   id?: string
   status?: $Enums.ScanJobStatus
+  batch?: number | null
   phase?: string
   pagesTotal?: number
   pagesDone?: number
@@ -675,6 +712,7 @@ export type ScanJobCreateWithoutSourceSiteInput = {
 export type ScanJobUncheckedCreateWithoutSourceSiteInput = {
   id?: string
   status?: $Enums.ScanJobStatus
+  batch?: number | null
   phase?: string
   pagesTotal?: number
   pagesDone?: number
@@ -722,6 +760,7 @@ export type ScanJobScalarWhereInput = {
   id?: Prisma.StringFilter<"ScanJob"> | string
   sourceSiteId?: Prisma.StringFilter<"ScanJob"> | string
   status?: Prisma.EnumScanJobStatusFilter<"ScanJob"> | $Enums.ScanJobStatus
+  batch?: Prisma.IntNullableFilter<"ScanJob"> | number | null
   phase?: Prisma.StringFilter<"ScanJob"> | string
   pagesTotal?: Prisma.IntFilter<"ScanJob"> | number
   pagesDone?: Prisma.IntFilter<"ScanJob"> | number
@@ -739,6 +778,7 @@ export type ScanJobScalarWhereInput = {
 export type ScanJobCreateManySourceSiteInput = {
   id?: string
   status?: $Enums.ScanJobStatus
+  batch?: number | null
   phase?: string
   pagesTotal?: number
   pagesDone?: number
@@ -756,6 +796,7 @@ export type ScanJobCreateManySourceSiteInput = {
 export type ScanJobUpdateWithoutSourceSiteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumScanJobStatusFieldUpdateOperationsInput | $Enums.ScanJobStatus
+  batch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   pagesTotal?: Prisma.IntFieldUpdateOperationsInput | number
   pagesDone?: Prisma.IntFieldUpdateOperationsInput | number
@@ -773,6 +814,7 @@ export type ScanJobUpdateWithoutSourceSiteInput = {
 export type ScanJobUncheckedUpdateWithoutSourceSiteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumScanJobStatusFieldUpdateOperationsInput | $Enums.ScanJobStatus
+  batch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   pagesTotal?: Prisma.IntFieldUpdateOperationsInput | number
   pagesDone?: Prisma.IntFieldUpdateOperationsInput | number
@@ -790,6 +832,7 @@ export type ScanJobUncheckedUpdateWithoutSourceSiteInput = {
 export type ScanJobUncheckedUpdateManyWithoutSourceSiteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumScanJobStatusFieldUpdateOperationsInput | $Enums.ScanJobStatus
+  batch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   pagesTotal?: Prisma.IntFieldUpdateOperationsInput | number
   pagesDone?: Prisma.IntFieldUpdateOperationsInput | number
@@ -810,6 +853,7 @@ export type ScanJobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   sourceSiteId?: boolean
   status?: boolean
+  batch?: boolean
   phase?: boolean
   pagesTotal?: boolean
   pagesDone?: boolean
@@ -829,6 +873,7 @@ export type ScanJobSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   sourceSiteId?: boolean
   status?: boolean
+  batch?: boolean
   phase?: boolean
   pagesTotal?: boolean
   pagesDone?: boolean
@@ -848,6 +893,7 @@ export type ScanJobSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   sourceSiteId?: boolean
   status?: boolean
+  batch?: boolean
   phase?: boolean
   pagesTotal?: boolean
   pagesDone?: boolean
@@ -867,6 +913,7 @@ export type ScanJobSelectScalar = {
   id?: boolean
   sourceSiteId?: boolean
   status?: boolean
+  batch?: boolean
   phase?: boolean
   pagesTotal?: boolean
   pagesDone?: boolean
@@ -881,7 +928,7 @@ export type ScanJobSelectScalar = {
   createdAt?: boolean
 }
 
-export type ScanJobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sourceSiteId" | "status" | "phase" | "pagesTotal" | "pagesDone" | "pagesFailed" | "domainsFound" | "mentionsFound" | "lastMessage" | "error" | "heartbeatAt" | "startedAt" | "finishedAt" | "createdAt", ExtArgs["result"]["scanJob"]>
+export type ScanJobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sourceSiteId" | "status" | "batch" | "phase" | "pagesTotal" | "pagesDone" | "pagesFailed" | "domainsFound" | "mentionsFound" | "lastMessage" | "error" | "heartbeatAt" | "startedAt" | "finishedAt" | "createdAt", ExtArgs["result"]["scanJob"]>
 export type ScanJobInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sourceSite?: boolean | Prisma.SourceSiteDefaultArgs<ExtArgs>
 }
@@ -901,6 +948,7 @@ export type $ScanJobPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     sourceSiteId: string
     status: $Enums.ScanJobStatus
+    batch: number | null
     phase: string
     pagesTotal: number
     pagesDone: number
@@ -1340,6 +1388,7 @@ export interface ScanJobFieldRefs {
   readonly id: Prisma.FieldRef<"ScanJob", 'String'>
   readonly sourceSiteId: Prisma.FieldRef<"ScanJob", 'String'>
   readonly status: Prisma.FieldRef<"ScanJob", 'ScanJobStatus'>
+  readonly batch: Prisma.FieldRef<"ScanJob", 'Int'>
   readonly phase: Prisma.FieldRef<"ScanJob", 'String'>
   readonly pagesTotal: Prisma.FieldRef<"ScanJob", 'Int'>
   readonly pagesDone: Prisma.FieldRef<"ScanJob", 'Int'>

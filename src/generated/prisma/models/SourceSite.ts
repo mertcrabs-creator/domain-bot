@@ -51,6 +51,7 @@ export type SourceSiteCountAggregateOutputType = {
   isActive: number
   mode: number
   lastScanned: number
+  sitemapUrls: number
   createdAt: number
   _all: number
 }
@@ -83,6 +84,7 @@ export type SourceSiteCountAggregateInputType = {
   isActive?: true
   mode?: true
   lastScanned?: true
+  sitemapUrls?: true
   createdAt?: true
   _all?: true
 }
@@ -166,6 +168,7 @@ export type SourceSiteGroupByOutputType = {
   isActive: boolean
   mode: $Enums.ScanMode
   lastScanned: Date | null
+  sitemapUrls: string[]
   createdAt: Date
   _count: SourceSiteCountAggregateOutputType | null
   _min: SourceSiteMinAggregateOutputType | null
@@ -197,9 +200,11 @@ export type SourceSiteWhereInput = {
   isActive?: Prisma.BoolFilter<"SourceSite"> | boolean
   mode?: Prisma.EnumScanModeFilter<"SourceSite"> | $Enums.ScanMode
   lastScanned?: Prisma.DateTimeNullableFilter<"SourceSite"> | Date | string | null
+  sitemapUrls?: Prisma.StringNullableListFilter<"SourceSite">
   createdAt?: Prisma.DateTimeFilter<"SourceSite"> | Date | string
   domains?: Prisma.DroppedDomainListRelationFilter
   pages?: Prisma.SourcePageListRelationFilter
+  batches?: Prisma.PageBatchListRelationFilter
   jobs?: Prisma.ScanJobListRelationFilter
   mentions?: Prisma.DomainMentionListRelationFilter
 }
@@ -211,9 +216,11 @@ export type SourceSiteOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   lastScanned?: Prisma.SortOrderInput | Prisma.SortOrder
+  sitemapUrls?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   domains?: Prisma.DroppedDomainOrderByRelationAggregateInput
   pages?: Prisma.SourcePageOrderByRelationAggregateInput
+  batches?: Prisma.PageBatchOrderByRelationAggregateInput
   jobs?: Prisma.ScanJobOrderByRelationAggregateInput
   mentions?: Prisma.DomainMentionOrderByRelationAggregateInput
 }
@@ -228,9 +235,11 @@ export type SourceSiteWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"SourceSite"> | boolean
   mode?: Prisma.EnumScanModeFilter<"SourceSite"> | $Enums.ScanMode
   lastScanned?: Prisma.DateTimeNullableFilter<"SourceSite"> | Date | string | null
+  sitemapUrls?: Prisma.StringNullableListFilter<"SourceSite">
   createdAt?: Prisma.DateTimeFilter<"SourceSite"> | Date | string
   domains?: Prisma.DroppedDomainListRelationFilter
   pages?: Prisma.SourcePageListRelationFilter
+  batches?: Prisma.PageBatchListRelationFilter
   jobs?: Prisma.ScanJobListRelationFilter
   mentions?: Prisma.DomainMentionListRelationFilter
 }, "id" | "url">
@@ -242,6 +251,7 @@ export type SourceSiteOrderByWithAggregationInput = {
   isActive?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   lastScanned?: Prisma.SortOrderInput | Prisma.SortOrder
+  sitemapUrls?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.SourceSiteCountOrderByAggregateInput
   _max?: Prisma.SourceSiteMaxOrderByAggregateInput
@@ -258,6 +268,7 @@ export type SourceSiteScalarWhereWithAggregatesInput = {
   isActive?: Prisma.BoolWithAggregatesFilter<"SourceSite"> | boolean
   mode?: Prisma.EnumScanModeWithAggregatesFilter<"SourceSite"> | $Enums.ScanMode
   lastScanned?: Prisma.DateTimeNullableWithAggregatesFilter<"SourceSite"> | Date | string | null
+  sitemapUrls?: Prisma.StringNullableListFilter<"SourceSite">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SourceSite"> | Date | string
 }
 
@@ -268,9 +279,11 @@ export type SourceSiteCreateInput = {
   isActive?: boolean
   mode?: $Enums.ScanMode
   lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
   createdAt?: Date | string
   domains?: Prisma.DroppedDomainCreateNestedManyWithoutSourceSiteInput
   pages?: Prisma.SourcePageCreateNestedManyWithoutSourceSiteInput
+  batches?: Prisma.PageBatchCreateNestedManyWithoutSourceSiteInput
   jobs?: Prisma.ScanJobCreateNestedManyWithoutSourceSiteInput
   mentions?: Prisma.DomainMentionCreateNestedManyWithoutSourceSiteInput
 }
@@ -282,9 +295,11 @@ export type SourceSiteUncheckedCreateInput = {
   isActive?: boolean
   mode?: $Enums.ScanMode
   lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
   createdAt?: Date | string
   domains?: Prisma.DroppedDomainUncheckedCreateNestedManyWithoutSourceSiteInput
   pages?: Prisma.SourcePageUncheckedCreateNestedManyWithoutSourceSiteInput
+  batches?: Prisma.PageBatchUncheckedCreateNestedManyWithoutSourceSiteInput
   jobs?: Prisma.ScanJobUncheckedCreateNestedManyWithoutSourceSiteInput
   mentions?: Prisma.DomainMentionUncheckedCreateNestedManyWithoutSourceSiteInput
 }
@@ -296,9 +311,11 @@ export type SourceSiteUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
   lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   domains?: Prisma.DroppedDomainUpdateManyWithoutSourceSiteNestedInput
   pages?: Prisma.SourcePageUpdateManyWithoutSourceSiteNestedInput
+  batches?: Prisma.PageBatchUpdateManyWithoutSourceSiteNestedInput
   jobs?: Prisma.ScanJobUpdateManyWithoutSourceSiteNestedInput
   mentions?: Prisma.DomainMentionUpdateManyWithoutSourceSiteNestedInput
 }
@@ -310,9 +327,11 @@ export type SourceSiteUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
   lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   domains?: Prisma.DroppedDomainUncheckedUpdateManyWithoutSourceSiteNestedInput
   pages?: Prisma.SourcePageUncheckedUpdateManyWithoutSourceSiteNestedInput
+  batches?: Prisma.PageBatchUncheckedUpdateManyWithoutSourceSiteNestedInput
   jobs?: Prisma.ScanJobUncheckedUpdateManyWithoutSourceSiteNestedInput
   mentions?: Prisma.DomainMentionUncheckedUpdateManyWithoutSourceSiteNestedInput
 }
@@ -324,6 +343,7 @@ export type SourceSiteCreateManyInput = {
   isActive?: boolean
   mode?: $Enums.ScanMode
   lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
   createdAt?: Date | string
 }
 
@@ -334,6 +354,7 @@ export type SourceSiteUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
   lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -344,7 +365,16 @@ export type SourceSiteUncheckedUpdateManyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
   lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type SourceSiteCountOrderByAggregateInput = {
@@ -354,6 +384,7 @@ export type SourceSiteCountOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   lastScanned?: Prisma.SortOrder
+  sitemapUrls?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -382,12 +413,35 @@ export type SourceSiteScalarRelationFilter = {
   isNot?: Prisma.SourceSiteWhereInput
 }
 
+export type SourceSiteCreatesitemapUrlsInput = {
+  set: string[]
+}
+
 export type EnumScanModeFieldUpdateOperationsInput = {
   set?: $Enums.ScanMode
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type SourceSiteUpdatesitemapUrlsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type SourceSiteCreateNestedOneWithoutBatchesInput = {
+  create?: Prisma.XOR<Prisma.SourceSiteCreateWithoutBatchesInput, Prisma.SourceSiteUncheckedCreateWithoutBatchesInput>
+  connectOrCreate?: Prisma.SourceSiteCreateOrConnectWithoutBatchesInput
+  connect?: Prisma.SourceSiteWhereUniqueInput
+}
+
+export type SourceSiteUpdateOneRequiredWithoutBatchesNestedInput = {
+  create?: Prisma.XOR<Prisma.SourceSiteCreateWithoutBatchesInput, Prisma.SourceSiteUncheckedCreateWithoutBatchesInput>
+  connectOrCreate?: Prisma.SourceSiteCreateOrConnectWithoutBatchesInput
+  upsert?: Prisma.SourceSiteUpsertWithoutBatchesInput
+  connect?: Prisma.SourceSiteWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SourceSiteUpdateToOneWithWhereWithoutBatchesInput, Prisma.SourceSiteUpdateWithoutBatchesInput>, Prisma.SourceSiteUncheckedUpdateWithoutBatchesInput>
 }
 
 export type SourceSiteCreateNestedOneWithoutPagesInput = {
@@ -446,6 +500,82 @@ export type SourceSiteUpdateOneRequiredWithoutDomainsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SourceSiteUpdateToOneWithWhereWithoutDomainsInput, Prisma.SourceSiteUpdateWithoutDomainsInput>, Prisma.SourceSiteUncheckedUpdateWithoutDomainsInput>
 }
 
+export type SourceSiteCreateWithoutBatchesInput = {
+  id?: string
+  name: string
+  url: string
+  isActive?: boolean
+  mode?: $Enums.ScanMode
+  lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
+  createdAt?: Date | string
+  domains?: Prisma.DroppedDomainCreateNestedManyWithoutSourceSiteInput
+  pages?: Prisma.SourcePageCreateNestedManyWithoutSourceSiteInput
+  jobs?: Prisma.ScanJobCreateNestedManyWithoutSourceSiteInput
+  mentions?: Prisma.DomainMentionCreateNestedManyWithoutSourceSiteInput
+}
+
+export type SourceSiteUncheckedCreateWithoutBatchesInput = {
+  id?: string
+  name: string
+  url: string
+  isActive?: boolean
+  mode?: $Enums.ScanMode
+  lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
+  createdAt?: Date | string
+  domains?: Prisma.DroppedDomainUncheckedCreateNestedManyWithoutSourceSiteInput
+  pages?: Prisma.SourcePageUncheckedCreateNestedManyWithoutSourceSiteInput
+  jobs?: Prisma.ScanJobUncheckedCreateNestedManyWithoutSourceSiteInput
+  mentions?: Prisma.DomainMentionUncheckedCreateNestedManyWithoutSourceSiteInput
+}
+
+export type SourceSiteCreateOrConnectWithoutBatchesInput = {
+  where: Prisma.SourceSiteWhereUniqueInput
+  create: Prisma.XOR<Prisma.SourceSiteCreateWithoutBatchesInput, Prisma.SourceSiteUncheckedCreateWithoutBatchesInput>
+}
+
+export type SourceSiteUpsertWithoutBatchesInput = {
+  update: Prisma.XOR<Prisma.SourceSiteUpdateWithoutBatchesInput, Prisma.SourceSiteUncheckedUpdateWithoutBatchesInput>
+  create: Prisma.XOR<Prisma.SourceSiteCreateWithoutBatchesInput, Prisma.SourceSiteUncheckedCreateWithoutBatchesInput>
+  where?: Prisma.SourceSiteWhereInput
+}
+
+export type SourceSiteUpdateToOneWithWhereWithoutBatchesInput = {
+  where?: Prisma.SourceSiteWhereInput
+  data: Prisma.XOR<Prisma.SourceSiteUpdateWithoutBatchesInput, Prisma.SourceSiteUncheckedUpdateWithoutBatchesInput>
+}
+
+export type SourceSiteUpdateWithoutBatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
+  lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  domains?: Prisma.DroppedDomainUpdateManyWithoutSourceSiteNestedInput
+  pages?: Prisma.SourcePageUpdateManyWithoutSourceSiteNestedInput
+  jobs?: Prisma.ScanJobUpdateManyWithoutSourceSiteNestedInput
+  mentions?: Prisma.DomainMentionUpdateManyWithoutSourceSiteNestedInput
+}
+
+export type SourceSiteUncheckedUpdateWithoutBatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
+  lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  domains?: Prisma.DroppedDomainUncheckedUpdateManyWithoutSourceSiteNestedInput
+  pages?: Prisma.SourcePageUncheckedUpdateManyWithoutSourceSiteNestedInput
+  jobs?: Prisma.ScanJobUncheckedUpdateManyWithoutSourceSiteNestedInput
+  mentions?: Prisma.DomainMentionUncheckedUpdateManyWithoutSourceSiteNestedInput
+}
+
 export type SourceSiteCreateWithoutPagesInput = {
   id?: string
   name: string
@@ -453,8 +583,10 @@ export type SourceSiteCreateWithoutPagesInput = {
   isActive?: boolean
   mode?: $Enums.ScanMode
   lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
   createdAt?: Date | string
   domains?: Prisma.DroppedDomainCreateNestedManyWithoutSourceSiteInput
+  batches?: Prisma.PageBatchCreateNestedManyWithoutSourceSiteInput
   jobs?: Prisma.ScanJobCreateNestedManyWithoutSourceSiteInput
   mentions?: Prisma.DomainMentionCreateNestedManyWithoutSourceSiteInput
 }
@@ -466,8 +598,10 @@ export type SourceSiteUncheckedCreateWithoutPagesInput = {
   isActive?: boolean
   mode?: $Enums.ScanMode
   lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
   createdAt?: Date | string
   domains?: Prisma.DroppedDomainUncheckedCreateNestedManyWithoutSourceSiteInput
+  batches?: Prisma.PageBatchUncheckedCreateNestedManyWithoutSourceSiteInput
   jobs?: Prisma.ScanJobUncheckedCreateNestedManyWithoutSourceSiteInput
   mentions?: Prisma.DomainMentionUncheckedCreateNestedManyWithoutSourceSiteInput
 }
@@ -495,8 +629,10 @@ export type SourceSiteUpdateWithoutPagesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
   lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   domains?: Prisma.DroppedDomainUpdateManyWithoutSourceSiteNestedInput
+  batches?: Prisma.PageBatchUpdateManyWithoutSourceSiteNestedInput
   jobs?: Prisma.ScanJobUpdateManyWithoutSourceSiteNestedInput
   mentions?: Prisma.DomainMentionUpdateManyWithoutSourceSiteNestedInput
 }
@@ -508,8 +644,10 @@ export type SourceSiteUncheckedUpdateWithoutPagesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
   lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   domains?: Prisma.DroppedDomainUncheckedUpdateManyWithoutSourceSiteNestedInput
+  batches?: Prisma.PageBatchUncheckedUpdateManyWithoutSourceSiteNestedInput
   jobs?: Prisma.ScanJobUncheckedUpdateManyWithoutSourceSiteNestedInput
   mentions?: Prisma.DomainMentionUncheckedUpdateManyWithoutSourceSiteNestedInput
 }
@@ -521,9 +659,11 @@ export type SourceSiteCreateWithoutJobsInput = {
   isActive?: boolean
   mode?: $Enums.ScanMode
   lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
   createdAt?: Date | string
   domains?: Prisma.DroppedDomainCreateNestedManyWithoutSourceSiteInput
   pages?: Prisma.SourcePageCreateNestedManyWithoutSourceSiteInput
+  batches?: Prisma.PageBatchCreateNestedManyWithoutSourceSiteInput
   mentions?: Prisma.DomainMentionCreateNestedManyWithoutSourceSiteInput
 }
 
@@ -534,9 +674,11 @@ export type SourceSiteUncheckedCreateWithoutJobsInput = {
   isActive?: boolean
   mode?: $Enums.ScanMode
   lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
   createdAt?: Date | string
   domains?: Prisma.DroppedDomainUncheckedCreateNestedManyWithoutSourceSiteInput
   pages?: Prisma.SourcePageUncheckedCreateNestedManyWithoutSourceSiteInput
+  batches?: Prisma.PageBatchUncheckedCreateNestedManyWithoutSourceSiteInput
   mentions?: Prisma.DomainMentionUncheckedCreateNestedManyWithoutSourceSiteInput
 }
 
@@ -563,9 +705,11 @@ export type SourceSiteUpdateWithoutJobsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
   lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   domains?: Prisma.DroppedDomainUpdateManyWithoutSourceSiteNestedInput
   pages?: Prisma.SourcePageUpdateManyWithoutSourceSiteNestedInput
+  batches?: Prisma.PageBatchUpdateManyWithoutSourceSiteNestedInput
   mentions?: Prisma.DomainMentionUpdateManyWithoutSourceSiteNestedInput
 }
 
@@ -576,9 +720,11 @@ export type SourceSiteUncheckedUpdateWithoutJobsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
   lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   domains?: Prisma.DroppedDomainUncheckedUpdateManyWithoutSourceSiteNestedInput
   pages?: Prisma.SourcePageUncheckedUpdateManyWithoutSourceSiteNestedInput
+  batches?: Prisma.PageBatchUncheckedUpdateManyWithoutSourceSiteNestedInput
   mentions?: Prisma.DomainMentionUncheckedUpdateManyWithoutSourceSiteNestedInput
 }
 
@@ -589,9 +735,11 @@ export type SourceSiteCreateWithoutMentionsInput = {
   isActive?: boolean
   mode?: $Enums.ScanMode
   lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
   createdAt?: Date | string
   domains?: Prisma.DroppedDomainCreateNestedManyWithoutSourceSiteInput
   pages?: Prisma.SourcePageCreateNestedManyWithoutSourceSiteInput
+  batches?: Prisma.PageBatchCreateNestedManyWithoutSourceSiteInput
   jobs?: Prisma.ScanJobCreateNestedManyWithoutSourceSiteInput
 }
 
@@ -602,9 +750,11 @@ export type SourceSiteUncheckedCreateWithoutMentionsInput = {
   isActive?: boolean
   mode?: $Enums.ScanMode
   lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
   createdAt?: Date | string
   domains?: Prisma.DroppedDomainUncheckedCreateNestedManyWithoutSourceSiteInput
   pages?: Prisma.SourcePageUncheckedCreateNestedManyWithoutSourceSiteInput
+  batches?: Prisma.PageBatchUncheckedCreateNestedManyWithoutSourceSiteInput
   jobs?: Prisma.ScanJobUncheckedCreateNestedManyWithoutSourceSiteInput
 }
 
@@ -631,9 +781,11 @@ export type SourceSiteUpdateWithoutMentionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
   lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   domains?: Prisma.DroppedDomainUpdateManyWithoutSourceSiteNestedInput
   pages?: Prisma.SourcePageUpdateManyWithoutSourceSiteNestedInput
+  batches?: Prisma.PageBatchUpdateManyWithoutSourceSiteNestedInput
   jobs?: Prisma.ScanJobUpdateManyWithoutSourceSiteNestedInput
 }
 
@@ -644,9 +796,11 @@ export type SourceSiteUncheckedUpdateWithoutMentionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
   lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   domains?: Prisma.DroppedDomainUncheckedUpdateManyWithoutSourceSiteNestedInput
   pages?: Prisma.SourcePageUncheckedUpdateManyWithoutSourceSiteNestedInput
+  batches?: Prisma.PageBatchUncheckedUpdateManyWithoutSourceSiteNestedInput
   jobs?: Prisma.ScanJobUncheckedUpdateManyWithoutSourceSiteNestedInput
 }
 
@@ -657,8 +811,10 @@ export type SourceSiteCreateWithoutDomainsInput = {
   isActive?: boolean
   mode?: $Enums.ScanMode
   lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
   createdAt?: Date | string
   pages?: Prisma.SourcePageCreateNestedManyWithoutSourceSiteInput
+  batches?: Prisma.PageBatchCreateNestedManyWithoutSourceSiteInput
   jobs?: Prisma.ScanJobCreateNestedManyWithoutSourceSiteInput
   mentions?: Prisma.DomainMentionCreateNestedManyWithoutSourceSiteInput
 }
@@ -670,8 +826,10 @@ export type SourceSiteUncheckedCreateWithoutDomainsInput = {
   isActive?: boolean
   mode?: $Enums.ScanMode
   lastScanned?: Date | string | null
+  sitemapUrls?: Prisma.SourceSiteCreatesitemapUrlsInput | string[]
   createdAt?: Date | string
   pages?: Prisma.SourcePageUncheckedCreateNestedManyWithoutSourceSiteInput
+  batches?: Prisma.PageBatchUncheckedCreateNestedManyWithoutSourceSiteInput
   jobs?: Prisma.ScanJobUncheckedCreateNestedManyWithoutSourceSiteInput
   mentions?: Prisma.DomainMentionUncheckedCreateNestedManyWithoutSourceSiteInput
 }
@@ -699,8 +857,10 @@ export type SourceSiteUpdateWithoutDomainsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
   lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pages?: Prisma.SourcePageUpdateManyWithoutSourceSiteNestedInput
+  batches?: Prisma.PageBatchUpdateManyWithoutSourceSiteNestedInput
   jobs?: Prisma.ScanJobUpdateManyWithoutSourceSiteNestedInput
   mentions?: Prisma.DomainMentionUpdateManyWithoutSourceSiteNestedInput
 }
@@ -712,8 +872,10 @@ export type SourceSiteUncheckedUpdateWithoutDomainsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mode?: Prisma.EnumScanModeFieldUpdateOperationsInput | $Enums.ScanMode
   lastScanned?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sitemapUrls?: Prisma.SourceSiteUpdatesitemapUrlsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pages?: Prisma.SourcePageUncheckedUpdateManyWithoutSourceSiteNestedInput
+  batches?: Prisma.PageBatchUncheckedUpdateManyWithoutSourceSiteNestedInput
   jobs?: Prisma.ScanJobUncheckedUpdateManyWithoutSourceSiteNestedInput
   mentions?: Prisma.DomainMentionUncheckedUpdateManyWithoutSourceSiteNestedInput
 }
@@ -726,6 +888,7 @@ export type SourceSiteUncheckedUpdateWithoutDomainsInput = {
 export type SourceSiteCountOutputType = {
   domains: number
   pages: number
+  batches: number
   jobs: number
   mentions: number
 }
@@ -733,6 +896,7 @@ export type SourceSiteCountOutputType = {
 export type SourceSiteCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   domains?: boolean | SourceSiteCountOutputTypeCountDomainsArgs
   pages?: boolean | SourceSiteCountOutputTypeCountPagesArgs
+  batches?: boolean | SourceSiteCountOutputTypeCountBatchesArgs
   jobs?: boolean | SourceSiteCountOutputTypeCountJobsArgs
   mentions?: boolean | SourceSiteCountOutputTypeCountMentionsArgs
 }
@@ -764,6 +928,13 @@ export type SourceSiteCountOutputTypeCountPagesArgs<ExtArgs extends runtime.Type
 /**
  * SourceSiteCountOutputType without action
  */
+export type SourceSiteCountOutputTypeCountBatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PageBatchWhereInput
+}
+
+/**
+ * SourceSiteCountOutputType without action
+ */
 export type SourceSiteCountOutputTypeCountJobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ScanJobWhereInput
 }
@@ -783,9 +954,11 @@ export type SourceSiteSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   isActive?: boolean
   mode?: boolean
   lastScanned?: boolean
+  sitemapUrls?: boolean
   createdAt?: boolean
   domains?: boolean | Prisma.SourceSite$domainsArgs<ExtArgs>
   pages?: boolean | Prisma.SourceSite$pagesArgs<ExtArgs>
+  batches?: boolean | Prisma.SourceSite$batchesArgs<ExtArgs>
   jobs?: boolean | Prisma.SourceSite$jobsArgs<ExtArgs>
   mentions?: boolean | Prisma.SourceSite$mentionsArgs<ExtArgs>
   _count?: boolean | Prisma.SourceSiteCountOutputTypeDefaultArgs<ExtArgs>
@@ -798,6 +971,7 @@ export type SourceSiteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   isActive?: boolean
   mode?: boolean
   lastScanned?: boolean
+  sitemapUrls?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["sourceSite"]>
 
@@ -808,6 +982,7 @@ export type SourceSiteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   isActive?: boolean
   mode?: boolean
   lastScanned?: boolean
+  sitemapUrls?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["sourceSite"]>
 
@@ -818,13 +993,15 @@ export type SourceSiteSelectScalar = {
   isActive?: boolean
   mode?: boolean
   lastScanned?: boolean
+  sitemapUrls?: boolean
   createdAt?: boolean
 }
 
-export type SourceSiteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "url" | "isActive" | "mode" | "lastScanned" | "createdAt", ExtArgs["result"]["sourceSite"]>
+export type SourceSiteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "url" | "isActive" | "mode" | "lastScanned" | "sitemapUrls" | "createdAt", ExtArgs["result"]["sourceSite"]>
 export type SourceSiteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   domains?: boolean | Prisma.SourceSite$domainsArgs<ExtArgs>
   pages?: boolean | Prisma.SourceSite$pagesArgs<ExtArgs>
+  batches?: boolean | Prisma.SourceSite$batchesArgs<ExtArgs>
   jobs?: boolean | Prisma.SourceSite$jobsArgs<ExtArgs>
   mentions?: boolean | Prisma.SourceSite$mentionsArgs<ExtArgs>
   _count?: boolean | Prisma.SourceSiteCountOutputTypeDefaultArgs<ExtArgs>
@@ -837,6 +1014,7 @@ export type $SourceSitePayload<ExtArgs extends runtime.Types.Extensions.Internal
   objects: {
     domains: Prisma.$DroppedDomainPayload<ExtArgs>[]
     pages: Prisma.$SourcePagePayload<ExtArgs>[]
+    batches: Prisma.$PageBatchPayload<ExtArgs>[]
     jobs: Prisma.$ScanJobPayload<ExtArgs>[]
     mentions: Prisma.$DomainMentionPayload<ExtArgs>[]
   }
@@ -847,6 +1025,7 @@ export type $SourceSitePayload<ExtArgs extends runtime.Types.Extensions.Internal
     isActive: boolean
     mode: $Enums.ScanMode
     lastScanned: Date | null
+    sitemapUrls: string[]
     createdAt: Date
   }, ExtArgs["result"]["sourceSite"]>
   composites: {}
@@ -1244,6 +1423,7 @@ export interface Prisma__SourceSiteClient<T, Null = never, ExtArgs extends runti
   readonly [Symbol.toStringTag]: "PrismaPromise"
   domains<T extends Prisma.SourceSite$domainsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SourceSite$domainsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DroppedDomainPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pages<T extends Prisma.SourceSite$pagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SourceSite$pagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SourcePagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  batches<T extends Prisma.SourceSite$batchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SourceSite$batchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PageBatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   jobs<T extends Prisma.SourceSite$jobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SourceSite$jobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScanJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   mentions<T extends Prisma.SourceSite$mentionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SourceSite$mentionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DomainMentionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1281,6 +1461,7 @@ export interface SourceSiteFieldRefs {
   readonly isActive: Prisma.FieldRef<"SourceSite", 'Boolean'>
   readonly mode: Prisma.FieldRef<"SourceSite", 'ScanMode'>
   readonly lastScanned: Prisma.FieldRef<"SourceSite", 'DateTime'>
+  readonly sitemapUrls: Prisma.FieldRef<"SourceSite", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"SourceSite", 'DateTime'>
 }
     
@@ -1720,6 +1901,30 @@ export type SourceSite$pagesArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.SourcePageScalarFieldEnum | Prisma.SourcePageScalarFieldEnum[]
+}
+
+/**
+ * SourceSite.batches
+ */
+export type SourceSite$batchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PageBatch
+   */
+  select?: Prisma.PageBatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PageBatch
+   */
+  omit?: Prisma.PageBatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PageBatchInclude<ExtArgs> | null
+  where?: Prisma.PageBatchWhereInput
+  orderBy?: Prisma.PageBatchOrderByWithRelationInput | Prisma.PageBatchOrderByWithRelationInput[]
+  cursor?: Prisma.PageBatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PageBatchScalarFieldEnum | Prisma.PageBatchScalarFieldEnum[]
 }
 
 /**
